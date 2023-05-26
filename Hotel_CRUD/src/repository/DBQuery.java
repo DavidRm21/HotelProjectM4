@@ -119,5 +119,43 @@ public class DBQuery {
         return rooms;
     }
 
+    public boolean verifyEmail(String email){
+        String query = "SELECT correo FROM cliente WHERE correo = \"" + email + "\"";
+        try{
+            conexion = connect.getConnection();
+            statement = conexion.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            if(resultSet.next()){
+                return true;
+            }else {
+                return false;
+            }
+
+        }catch (Exception e){
+            System.out.println("[ERROR] "+ e);
+            return false;
+        }
+    }
+
+    public void insertNewClient(int id, String name, String lastName, String email, String password, String phone){
+        String query = "INSERT INTO cliente (cliente_id, nombre, apellido, correo, contrasena, telefono) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+            try{
+                conexion = connect.getConnection();
+                preparedStatement = conexion.prepareStatement(query);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setString(2, name);
+                preparedStatement.setString(3, lastName);
+                preparedStatement.setString(4, email);
+                preparedStatement.setString(5, password);
+                preparedStatement.setString(6, phone);
+
+                preparedStatement.executeUpdate();
+
+            }catch (Exception e){
+                System.out.println("[ERROR] " + e);
+            }
+        }
 
 }

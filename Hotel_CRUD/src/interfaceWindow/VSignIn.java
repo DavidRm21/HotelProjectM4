@@ -26,7 +26,7 @@ public class VSignIn extends AbstractPanel {
         getText()[3].setBackground(new Color(0, 0, 0, 180));
         getText()[3].setOpaque(true);
 
-        getText()[3].add(drawLabel(0, font[0], "Hotel Risdamel", 0, 59, 1000, 170, Color.WHITE, JLabel.CENTER));
+        getText()[3].add(drawLabel(0, font[0], "Hotel Risdamel", 0, 50, 1000, 170, Color.WHITE, JLabel.CENTER));
         getText()[3].add(drawLabel(1, font[2], "Correo electrónico", 290, 264, 400, 42, Color.WHITE, JLabel.LEFT));
         getText()[3].add(drawLabel(2, font[2], "Contraseña", 290, 372, 400, 42, Color.WHITE, JLabel.LEFT));
 
