@@ -2,6 +2,7 @@ package interfaceWindow;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.CardLayout;
 
 public class FrameWindow {
 
@@ -18,13 +19,17 @@ public class FrameWindow {
     }
 
     public void putPanels(JPanel one, JPanel two, JPanel three){
-        jFrame.add(one);
-        jFrame.add(two);
-        jFrame.add(three);
+        CardLayout cardLayout = new CardLayout();
+        JPanel cardPanel = new JPanel(cardLayout);
 
-        jFrame.getContentPane().add(three);
-        jFrame.getContentPane().add(two);
-        jFrame.getContentPane().add(one);
+        cardPanel.add(one, "Sign_in");
+        cardPanel.add(two, "Reservation");
+        cardPanel.add(three, "Payment");
+
+        cardLayout.show(cardPanel, "Sign_in");
+
+        jFrame.getContentPane().add(cardPanel);
+//        jFrame.setUndecorated(true);
 
         jFrame.pack();
     }

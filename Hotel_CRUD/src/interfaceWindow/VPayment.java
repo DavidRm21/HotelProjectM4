@@ -1,8 +1,12 @@
 package interfaceWindow;
 
-import javax.swing.*;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
+
 
 public class VPayment extends AbstractPanel {
     private Font[] font;

@@ -1,6 +1,7 @@
 package interfaceWindow;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
@@ -8,7 +9,7 @@ import java.awt.Color;
 
 public class VSignIn extends AbstractPanel {
 
-
+    private JPanel registerPanel;
     private JTextField[] textInput;
     private Font[] font;
 
@@ -18,8 +19,9 @@ public class VSignIn extends AbstractPanel {
         this.textInput = new JTextField[textInput];
         this.font = new Font[font];
 
+
         this.drawComponents();
-    }
+   }
 
     public void drawComponents(){
 
@@ -55,6 +57,12 @@ public class VSignIn extends AbstractPanel {
         this.add(textInput[pos]);
         textInput[pos].setVisible(true);
         return textInput[pos];
+    }
+
+    public void drawRegisterPanel(){
+        registerPanel = new JPanel();
+
+        registerPanel.setBounds(62, 148, 730, 555);
     }
 
     public JTextField[] getTextInput() {

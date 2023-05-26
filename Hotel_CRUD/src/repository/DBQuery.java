@@ -2,9 +2,12 @@ package repository;
 
 import model.Client;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+
 
 public class DBQuery {
 
@@ -24,6 +27,7 @@ public class DBQuery {
             resultSet = statement.executeQuery(query);
 
             if(resultSet.next()){
+                saveClient(email);
                 return true;
             }else {
                 return false;
@@ -35,10 +39,10 @@ public class DBQuery {
         }
     }
 
-    public List<Client> saveClient(String emailClient){
+    public Client saveClient(String emailClient){
         String query = "SELECT cliente_id, nombre, apellido, correo, contrasena, telefono FROM cliente WHERE correo = \"" + emailClient + "\"";
 
-        List<Client> client = new ArrayList<>();
+        Client client = null;
 
         int id;
         String name;
@@ -60,7 +64,7 @@ public class DBQuery {
                 password = resultSet.getString(5);
                 phone = resultSet.getString(6);
 
-                client.add(new Client(
+                client =(new Client(
                         id,
                         name,
                         lastName,

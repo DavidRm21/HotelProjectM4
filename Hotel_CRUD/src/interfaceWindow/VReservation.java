@@ -1,9 +1,14 @@
 package interfaceWindow;
 
-import javax.swing.*;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Font;
 
 public class VReservation extends AbstractPanel {
 
@@ -37,6 +42,7 @@ public class VReservation extends AbstractPanel {
         drawLabel(8, font[2], "+", 1100, 585, 20, 40, Color.WHITE, JLabel.CENTER);
         drawLabel(9, font[2], "-", 1000, 585, 20, 40, Color.WHITE, JLabel.CENTER);
         drawLabel(10, font[2], "-", 1000, 533, 20, 40, Color.WHITE, JLabel.CENTER);
+        drawLabel(14, font[3], "Cerrar Sesión", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
 
         drawLabel(11, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
         getButtonEnd().setBackground(new Color(21, 19, 111));
@@ -107,6 +113,12 @@ public class VReservation extends AbstractPanel {
 
     public JLabel getLabelWelcome(){
         return getText()[0];
+    }
+    public JLabel getButtonFinish(){
+        return getText()[11];
+    }
+    public JLabel getSignOut(){
+        return getText()[14];
     }
 
 

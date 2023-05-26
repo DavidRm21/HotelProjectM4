@@ -6,9 +6,9 @@ import interfaceWindow.InitPanel;
 import interfaceWindow.VPayment;
 import interfaceWindow.VReservation;
 import interfaceWindow.VSignIn;
+import model.Client;
 import repository.DBQuery;
-
-import java.awt.*;
+import java.awt.Color;
 
 public class Services {
 
@@ -18,10 +18,12 @@ public class Services {
     private InitPanel initPanel;
     private MouseInputs inputs;
     private DBQuery dataBase;
+    private Client client;
     private int label = 15, button = 6, font = 4, textField = 6;
 
 
     public Services() {
+
         dataBase = new DBQuery();
         vSignIn = new VSignIn(label, button, font, textField);
         vReservation = new VReservation(label, button, font, textField);
@@ -42,6 +44,7 @@ public class Services {
         vReservation.getButtonEnd().addMouseListener(inputs);
         vReservation.getTextStart().addMouseListener(inputs);
         vReservation.getTextEnd().addMouseListener(inputs);
+        vReservation.getSignOut().addMouseListener(inputs);
 
         vPayment.getButtonPay().addMouseListener(inputs);
         vPayment.getButtonBack().addMouseListener(inputs);
@@ -53,6 +56,8 @@ public class Services {
     public void verifySuccess(String email, String password){
 
         if(dataBase.verifyUser(email, password)){
+            Client client = dataBase.saveClient(email);
+            vReservation.getLabelWelcome().setText("Bienvenido, " + client.getName() + " " + client.getLastName());
             vPayment.setVisible(false);
             vSignIn.setVisible(false);
             vReservation.setVisible(true);

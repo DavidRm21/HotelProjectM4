@@ -4,8 +4,7 @@ import interfaceWindow.VPayment;
 import interfaceWindow.VReservation;
 import interfaceWindow.VSignIn;
 import service.Services;
-
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -61,14 +60,23 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         if(e.getSource() == vPayment.getButtonPay()){
             System.out.println("Pagar");
         }
+        if(e.getSource() == vReservation.getButtonFinish()){
+            vReservation.setVisible(false);
+            vPayment.setVisible(true);
+        }
         if(e.getSource() == vPayment.getButtonBack()){
-            System.out.println("Atras");
+            vPayment.setVisible(false);
+            vReservation.setVisible(true);
         }
         if(e.getSource() == vSignIn.getTextInput()[0]){
             vSignIn.getTextInput()[0].setBackground(new Color(190, 190, 190));
         }
         if(e.getSource() == vSignIn.getTextInput()[1]){
             vSignIn.getTextInput()[1].setBackground(new Color(190, 190, 190));
+        }
+        if(e.getSource() == vReservation.getSignOut()){
+            vReservation.setVisible(false);
+            vSignIn.setVisible(true);
         }
 
     }
