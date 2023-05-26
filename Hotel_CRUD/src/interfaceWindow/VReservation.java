@@ -10,7 +10,6 @@ public class VReservation extends AbstractPanel {
     private JTextField[] textInput;
     private JTable table;
     private Font[] font;
-    private JPanel baseTable;
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, "assets/HotelReceptionResize.jpg");
@@ -38,32 +37,23 @@ public class VReservation extends AbstractPanel {
         drawLabel(9, font[2], "-", 1000, 585, 20, 40, Color.WHITE, JLabel.CENTER);
         drawLabel(10, font[2], "-", 1000, 533, 20, 40, Color.WHITE, JLabel.CENTER);
 
-        drawButton(0, font[2], "Finalizar", 1000, 650, 200, 40, new Color(21, 19, 111), JLabel.CENTER);
-        drawButton(1, font[2], "Disponible", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
-        drawBaseTable();
+        drawLabel(11, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
+        getButtonEnd().setBackground(new Color(21, 19, 111));
+        getButtonEnd().setOpaque(true);
+        drawLabel(12, font[2], "Disponible", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
+
+        drawLabel(13, font[2], "", 88, 120, 1100, 380, Color.WHITE, JLabel.CENTER);
+        getText()[13].setBackground(new Color(0, 0, 0, 180));
+        getText()[13].setOpaque(true);
 
         drawInputText(0, 250, 533, 300, 30, "AAAA/MM/DD Inicio", font[2]);
         drawInputText(1, 250, 585, 300, 30, "AAAA/MM/DD Final", font[2]);
-    }
 
-    public void drawBaseTable(){
-        baseTable = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.setColor(new Color(0, 0, 0));
-                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
-        baseTable.setBounds(88, 120, 1100, 380);
-        baseTable.setLayout(new BorderLayout());
-        this.add(baseTable);
-
-        createModel();
+        drawModel();
 
     }
 
-    public void createModel(){
+    public void drawModel(){
         Object[][] data = {{"101", "Doble", "2", "false", "70000", "TV", "4.5"}};
         String[] columnNames = {"Número", "Tipo", "Capacidad", "Estado", "Precio", "Servicios", "Calificación"};
         DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
@@ -77,7 +67,8 @@ public class VReservation extends AbstractPanel {
         table.setBackground(new Color(0, 0, 0,0));
         table.setOpaque(false);
         table.setFont(new Font("Arima Madurai", Font.BOLD, 24));
-        baseTable.add(new JScrollPane(table), BorderLayout.CENTER);
+        getText()[13].add(new JScrollPane(table), BorderLayout.CENTER);
+        table.repaint();
     }
 
     public void drawInputText(int pos, int x, int y, int width, int height, String text, Font font){
@@ -104,13 +95,17 @@ public class VReservation extends AbstractPanel {
         return getText()[9];
     }
     public JLabel getButtonEnd(){
-        return getButton()[0];
+        return getText()[11];
     }
     public JTextField getTextStart(){
         return textInput[0];
     }
     public JTextField getTextEnd(){
         return textInput[1];
+    }
+
+    public JLabel getLabelWelcome(){
+        return getText()[0];
     }
 
 

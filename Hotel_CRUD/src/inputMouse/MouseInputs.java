@@ -53,6 +53,12 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         if(e.getSource() == vReservation.getTextStart()){
             vReservation.getTextStart().setText("");
         }
+        if(e.getSource() == vPayment.getButtonPay()){
+            System.out.println("Pagar");
+        }
+        if(e.getSource() == vPayment.getButtonBack()){
+            System.out.println("Atras");
+        }
 
     }
 
@@ -75,7 +81,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vSignIn.getButtonLog().setBackground(new Color(21, 19, 181));
         }
         if(e.getSource() == vReservation.getButtonEnd()){
-            vReservation.getButton()[0].setBackground(new Color(21, 19, 181));
+            vReservation.getButtonEnd().setBackground(new Color(21, 19, 181));
         }
     }
 
@@ -88,7 +94,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vSignIn.getButtonLog().setBackground(new Color(21, 19, 111));
         }
         if(e.getSource() == vReservation.getButtonEnd()){
-            vReservation.getButton()[0].setBackground(new Color(21, 19, 111));
+            vReservation.getButtonEnd().setBackground(new Color(21, 19, 111));
         }
     }
 

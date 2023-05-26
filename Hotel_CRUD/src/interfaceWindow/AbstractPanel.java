@@ -44,7 +44,7 @@ public abstract class AbstractPanel extends JPanel {
         g.drawImage(image, 0, 0, this);
     }
 
-    public void drawLabel(int pos, Font font, String text, int x, int y, int width, int height, Color color, int align){
+    public JLabel drawLabel(int pos, Font font, String text, int x, int y, int width, int height, Color color, int align){
         spanText[pos] = new JLabel(text);
         spanText[pos].setBounds(x, y, width, height);
         spanText[pos].setForeground(color);
@@ -52,9 +52,10 @@ public abstract class AbstractPanel extends JPanel {
         spanText[pos].setHorizontalAlignment(align);
         this.add(spanText[pos]);
         spanText[pos].setVisible(true);
+        return spanText[pos];
     }
 
-    public void drawButton(int pos, Font font, String text, int x, int y, int width, int height, Color color, int align){
+    public JLabel drawButton(int pos, Font font, String text, int x, int y, int width, int height, Color color, int align){
         button[pos] = new JLabel(text);
         button[pos].setBounds(x, y, width, height);
         button[pos].setBorder(null);
@@ -67,6 +68,7 @@ public abstract class AbstractPanel extends JPanel {
         this.add(button[pos]);
 
         button[pos].setVisible(true);
+        return button[pos];
     }
 
 

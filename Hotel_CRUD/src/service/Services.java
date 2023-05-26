@@ -14,11 +14,12 @@ public class Services {
     private VPayment vPayment;
     private InitPanel initPanel;
     private MouseInputs inputs;
+    private int label = 15, button = 6, font = 4, textField = 6;
 
     public Services() {
-        vSignIn = new VSignIn(3, 2, 4, 2);
-        vReservation = new VReservation(13, 6, 4, 2);
-        vPayment = new VPayment();
+        vSignIn = new VSignIn(label, button, font, textField);
+        vReservation = new VReservation(label, button, font, textField);
+        vPayment = new VPayment(label, button, font, textField);
 
         initPanel = new InitPanel(vSignIn, vReservation, vPayment);
         inputs = new MouseInputs(vSignIn, vReservation, vPayment);
@@ -32,6 +33,8 @@ public class Services {
         vReservation.getButtonEnd().addMouseListener(inputs);
         vReservation.getTextStart().addMouseListener(inputs);
         vReservation.getTextEnd().addMouseListener(inputs);
+        vPayment.getButtonPay().addMouseListener(inputs);
+        vPayment.getButtonBack().addMouseListener(inputs);
 
     }
 }
