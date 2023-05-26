@@ -6,16 +6,18 @@ public class Client {
     private String name;
     private String lastName;
     private String email;
+    private String password;
     private String phone;
 
     public Client() {
     }
 
-    public Client(int id, String name, String lastName, String email, String phone) {
+    public Client(int id, String name, String lastName, String email, String password, String phone) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.phone = phone;
     }
 
@@ -57,5 +59,13 @@ public class Client {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

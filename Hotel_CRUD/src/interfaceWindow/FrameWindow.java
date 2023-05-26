@@ -18,13 +18,13 @@ public class FrameWindow {
     }
 
     public void putPanels(JPanel one, JPanel two, JPanel three){
-//        jFrame.add(one);
+        jFrame.add(one);
         jFrame.add(two);
-//        jFrame.add(three);
+        jFrame.add(three);
 
-//        jFrame.getContentPane().add(one);
+        jFrame.getContentPane().add(three);
         jFrame.getContentPane().add(two);
-//        jFrame.getContentPane().add(three);
+        jFrame.getContentPane().add(one);
 
         jFrame.pack();
     }

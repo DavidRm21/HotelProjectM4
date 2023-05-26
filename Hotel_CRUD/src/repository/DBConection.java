@@ -14,7 +14,7 @@ public class DBConection {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/hotel",
+                    "jdbc:mysql://localhost:3306/establecimientos",
                     user,
                     password);
 

@@ -48,6 +48,7 @@ public class VPayment extends AbstractPanel {
         getButtonBack().setIcon(icon);
         getText()[0].add(getButtonBack());
 
+
     }
 
     public JTextField drawInputText(int pos, Font font, int x, int y, int width, int height){

@@ -17,6 +17,7 @@ public class VReservation extends AbstractPanel {
         this.font = new Font[font];
 
         drawComponents();
+
     }
 
     public void drawComponents(){

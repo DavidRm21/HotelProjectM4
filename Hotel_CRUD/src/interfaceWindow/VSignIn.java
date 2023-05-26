@@ -42,6 +42,7 @@ public class VSignIn extends AbstractPanel {
 
         getText()[3].add(drawButton(0, font[2], "Registrar", 290, 510, 147, 48, new Color(28, 151, 18), JLabel.CENTER));
         getText()[3].add(drawButton(1, font[2], "Entrar", 546, 510, 147, 48, new Color(21, 19, 111), JLabel.CENTER));
+
     }
 
     public JTextField drawInputText(int pos, Font font, int x, int y, int width, int height){

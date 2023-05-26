@@ -1,5 +1,7 @@
 package model;
 
+import repository.DBQuery;
+
 public class Room {
 
     private int id;
@@ -78,4 +80,5 @@ public class Room {
     public void setService(int service) {
         this.service = service;
     }
+
 }
