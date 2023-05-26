@@ -1,20 +1,22 @@
 package interfaceWindow;
 
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
+import model.Room;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Font;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VReservation extends AbstractPanel {
 
     private JTextField[] textInput;
     private JTable table;
     private Font[] font;
+    private JPanel tablaPanel;
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, "assets/HotelReceptionResize.jpg");
@@ -49,33 +51,68 @@ public class VReservation extends AbstractPanel {
         getButtonEnd().setOpaque(true);
         drawLabel(12, font[2], "Disponible", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
 
-        drawLabel(13, font[2], "", 88, 120, 1100, 380, Color.WHITE, JLabel.CENTER);
-        getText()[13].setBackground(new Color(0, 0, 0, 180));
-        getText()[13].setOpaque(true);
+        tablaPanel = new JPanel(new BorderLayout());
+        tablaPanel.setBounds(88, 120, 1100, 368);
+        tablaPanel.setBackground(new Color(0, 0, 0));
+        tablaPanel.setBorder(null);
+        tablaPanel.setOpaque(true);
+        this.add(tablaPanel);
 
         drawInputText(0, 250, 533, 300, 30, "AAAA/MM/DD Inicio", font[2]);
         drawInputText(1, 250, 585, 300, 30, "AAAA/MM/DD Final", font[2]);
 
-        drawModel();
+
 
     }
 
-    public void drawModel(){
-        Object[][] data = {{"101", "Doble", "2", "false", "70000", "TV", "4.5"}};
-        String[] columnNames = {"Número", "Tipo", "Capacidad", "Estado", "Precio", "Servicios", "Calificación"};
-        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+    public void drawModel(ArrayList<Room> rooms){
+        ArrayList<Room> roomList = rooms;
+        String[] columnNames = {"Número", "Tipo", "Capacidad", "Precio", "Estado"};
 
-        drawTable(tableModel);
+        DefaultTableModel model = new DefaultTableModel();
+        for(String column : columnNames){
+            model.addColumn(column);
+        }
+
+        for(Room room : roomList){
+            model.addRow(new Object[] {room.getId(), room.getType(), room.getCapacity(), room.getPrice(), room.isState()});
+        }
+
+        drawTable(model);
     }
 
     public void drawTable(DefaultTableModel model){
 
+        model.isCellEditable(11, 4);
         table = new JTable(model);
-        table.setBackground(new Color(0, 0, 0,0));
-        table.setOpaque(false);
-        table.setFont(new Font("Arima Madurai", Font.BOLD, 24));
-        getText()[13].add(new JScrollPane(table), BorderLayout.CENTER);
-        table.repaint();
+        table.setBorder(null);
+        table.setRowHeight(27);
+        table.getColumnModel().getColumn(0).setPreferredWidth(20);
+        table.setFont(new Font("Arima Madurai", Font.PLAIN, 18));
+        table.isCellEditable(12, 4);
+
+        table.setShowGrid(true);
+
+
+
+        JTableHeader headerColumn = table.getTableHeader();
+        headerColumn.setPreferredSize(new Dimension(headerColumn.getWidth(), 40));
+        headerColumn.setBackground(new Color(0,0,0));
+        headerColumn.setFont(new Font("Arima Madurai", Font.BOLD, 26));
+        headerColumn.setForeground(Color.WHITE);
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setBorder(BorderFactory.createEmptyBorder());
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        cellRenderer.setOpaque(true);
+        cellRenderer.setBackground(new Color(0, 0, 0));
+        cellRenderer.setForeground(Color.WHITE);
+
+        for (int i = 0; i < 5; i++){
+            table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+
+        tablaPanel.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
     public void drawInputText(int pos, int x, int y, int width, int height, String text, Font font){

@@ -5,25 +5,22 @@ import repository.DBQuery;
 public class Room {
 
     private int id;
-    private int hotel;
     private String type;
     private float price;
     private int capacity;
     private boolean state;
-    private int service;
 
     public Room() {
     }
 
-    public Room(int id, int hotel, String type, float price, int capacity, boolean state, int service) {
+    public Room(int id, String type, float price, int capacity, boolean state) {
         this.id = id;
-        this.hotel = hotel;
         this.type = type;
         this.price = price;
         this.capacity = capacity;
         this.state = state;
-        this.service = service;
     }
+
 
     public int getId() {
         return id;
@@ -31,14 +28,6 @@ public class Room {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(int hotel) {
-        this.hotel = hotel;
     }
 
     public String getType() {
@@ -73,12 +62,5 @@ public class Room {
         this.state = state;
     }
 
-    public int getService() {
-        return service;
-    }
-
-    public void setService(int service) {
-        this.service = service;
-    }
 
 }

@@ -49,6 +49,8 @@ public class Services {
         vPayment.getButtonPay().addMouseListener(inputs);
         vPayment.getButtonBack().addMouseListener(inputs);
 
+        vReservation.drawModel(dataBase.readRooms());
+
 
 
     }

@@ -1,5 +1,6 @@
 package repository;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -26,5 +27,6 @@ public class DBConection {
     public  Connection getConnection(){
         return connection;
     }
+
 
 }

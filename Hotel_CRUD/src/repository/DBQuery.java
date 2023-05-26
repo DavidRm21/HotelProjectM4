@@ -1,12 +1,14 @@
 package repository;
 
 import model.Client;
+import model.Room;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBQuery {
@@ -78,6 +80,43 @@ public class DBQuery {
         }
 
         return client;
+    }
+
+    public ArrayList<Room> readRooms(){
+        String query = "SELECT habitacion_id, tipo, precio, capacidad, estado FROM habitacion WHERE hotel_id = 1";
+
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        int id;
+        String type;
+        float price;
+        int capability;
+        boolean state;
+
+        try{
+            conexion = connect.getConnection();
+            statement = conexion.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()) {
+                id = resultSet.getInt(1);
+                type = resultSet.getString(2);
+                price = resultSet.getFloat(3);
+                capability = resultSet.getInt(4);
+                state = resultSet.getBoolean(5);
+
+                rooms.add(new Room(
+                        id,
+                        type,
+                        price,
+                        capability,
+                        state     ));
+            }
+        }catch (Exception e){
+            System.out.println("[ERROR] "+ e);
+        }
+
+        return rooms;
     }
 
 

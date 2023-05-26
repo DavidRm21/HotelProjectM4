@@ -4,8 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
-import java.awt.Color;
+import java.awt.*;
 
 public class VSignIn extends AbstractPanel {
 
@@ -60,9 +59,7 @@ public class VSignIn extends AbstractPanel {
     }
 
     public void drawRegisterPanel(){
-        registerPanel = new JPanel();
 
-        registerPanel.setBounds(62, 148, 730, 555);
     }
 
     public JTextField[] getTextInput() {

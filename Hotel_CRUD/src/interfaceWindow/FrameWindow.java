@@ -29,7 +29,6 @@ public class FrameWindow {
         cardLayout.show(cardPanel, "Sign_in");
 
         jFrame.getContentPane().add(cardPanel);
-//        jFrame.setUndecorated(true);
 
         jFrame.pack();
     }
