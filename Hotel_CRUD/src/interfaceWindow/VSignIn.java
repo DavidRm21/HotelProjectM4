@@ -1,23 +1,16 @@
 package interfaceWindow;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class VSignIn extends AbstractPanel {
 
-    private JPanel registerPanel;
-    private JTextField[] textInput;
     private Font[] font;
 
 
     public VSignIn(int text, int button, int font, int textInput) {
-        super(text, button, "assets/HotelmenuResize.jpg");
-        this.textInput = new JTextField[textInput];
+        super(text, button, textInput, "assets/HotelmenuResize.jpg");
         this.font = new Font[font];
-
 
         this.drawComponents();
    }
@@ -38,32 +31,12 @@ public class VSignIn extends AbstractPanel {
         getText()[3].add(drawLabel(2, font[2], "Contraseña", 290, 372, 400, 42, Color.WHITE, JLabel.LEFT));
 
 
-        getText()[3].add(drawInputText(0, font[2], 290, 306, 400, 50));
-        getText()[3].add(drawInputText(1, font[2], 290, 404, 400, 50));
+        getText()[3].add(drawInputText(0, font[2], "", 290, 306, 400, 50));
+        getText()[3].add(drawInputText(1, font[2], "", 290, 404, 400, 50));
 
         getText()[3].add(drawButton(0, font[2], "Registrar", 290, 510, 147, 48, new Color(28, 151, 18), JLabel.CENTER));
         getText()[3].add(drawButton(1, font[2], "Entrar", 546, 510, 147, 48, new Color(21, 19, 111), JLabel.CENTER));
 
-    }
-
-    public JTextField drawInputText(int pos, Font font, int x, int y, int width, int height){
-        textInput[pos] = new JTextField();
-        textInput[pos].setBounds(x, y, width, height);
-        textInput[pos].setFont(font);
-        textInput[pos].setBorder(new EmptyBorder(0, 20, 0, 0));
-        textInput[pos].setBackground(new Color(190, 190, 190));
-        textInput[pos].setOpaque(true);
-        this.add(textInput[pos]);
-        textInput[pos].setVisible(true);
-        return textInput[pos];
-    }
-
-    public void drawRegisterPanel(){
-
-    }
-
-    public JTextField[] getTextInput() {
-        return textInput;
     }
 
     public JLabel getButtonRecord() {

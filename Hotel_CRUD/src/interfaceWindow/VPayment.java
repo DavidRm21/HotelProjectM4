@@ -10,12 +10,10 @@ import java.awt.Color;
 
 public class VPayment extends AbstractPanel {
     private Font[] font;
-    private JTextField[] textInput;
 
     public VPayment(int text, int button, int font, int textInput) {
-        super(text, button, "assets/HotelFinalResize.jpg");
+        super(text, button, textInput, "assets/HotelFinalResize.jpg");
         this.font = new Font[font];
-        this.textInput = new JTextField[textInput];
 
         drawComponents();
 
@@ -32,12 +30,12 @@ public class VPayment extends AbstractPanel {
         getText()[0].setBackground(new Color(0, 0, 0, 180));
         getText()[0].setOpaque(true);
 
-        getText()[0].add(drawInputText(0, font[2], 225, 120, 630, 40));
-        getText()[0].add(drawInputText(1, font[2], 225, 200, 266, 40));
-        getText()[0].add(drawInputText(2, font[2], 225, 280, 266, 40));
-        getText()[0].add(drawInputText(3, font[2], 590, 200, 266, 40));
-        getText()[0].add(drawInputText(4, font[2], 590, 280, 266, 40));
-        getText()[0].add(drawInputText(5, font[2], 225, 360, 630, 40));
+        getText()[0].add(drawInputText(0, font[2], "", 225, 120, 630, 40));
+        getText()[0].add(drawInputText(1, font[2], "", 225, 200, 266, 40));
+        getText()[0].add(drawInputText(2, font[2], "", 225, 280, 266, 40));
+        getText()[0].add(drawInputText(3, font[2], "", 590, 200, 266, 40));
+        getText()[0].add(drawInputText(4, font[2], "", 590, 280, 266, 40));
+        getText()[0].add(drawInputText(5, font[2], "", 225, 360, 630, 40));
 
         drawLabel(1, font[1], "Pagar: $5000", 375, 460, 350, 70, Color.WHITE, JLabel.CENTER);
         getButtonPay().setBackground(new Color(144, 142, 249, 200));
@@ -55,18 +53,6 @@ public class VPayment extends AbstractPanel {
 
     }
 
-    public JTextField drawInputText(int pos, Font font, int x, int y, int width, int height){
-        textInput[pos] = new JTextField();
-        textInput[pos].setBounds(x, y, width, height);
-        textInput[pos].setFont(font);
-        textInput[pos].setBorder(new EmptyBorder(0, 20, 0, 0));
-        textInput[pos].setBackground(new Color(190, 190, 190));
-        textInput[pos].setOpaque(true);
-        this.add(textInput[pos]);
-        textInput[pos].setVisible(true);
-        return textInput[pos];
-    }
-
     public JLabel getButtonPay(){
         return getText()[1];
     }
@@ -76,23 +62,23 @@ public class VPayment extends AbstractPanel {
     }
 
     public JTextField getCardNumber(){
-        return textInput[0];
+        return getTextInput()[0];
     }
 
     public JTextField getCardDate(){
-        return textInput[1];
+        return getTextInput()[1];
     }
 
     public JTextField getCardCCV(){
-        return textInput[3];
+        return getTextInput()[3];
     }
 
     public JTextField getNameCard(){
-        return textInput[2];
+        return getTextInput()[2];
     }
 
     public JTextField getLastNameCard(){
-        return textInput[4];
+        return getTextInput()[4];
     }
 
 

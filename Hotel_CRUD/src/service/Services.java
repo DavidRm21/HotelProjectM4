@@ -46,12 +46,11 @@ public class Services {
         vReservation.getTextEnd().addMouseListener(inputs);
         vReservation.getSignOut().addMouseListener(inputs);
 
-        vPayment.getButtonPay().addMouseListener(inputs);
-        vPayment.getButtonBack().addMouseListener(inputs);
-
         vReservation.drawModel(dataBase.readRooms());
 
 
+        vPayment.getButtonPay().addMouseListener(inputs);
+        vPayment.getButtonBack().addMouseListener(inputs);
 
     }
 
@@ -59,7 +58,7 @@ public class Services {
 
         if(dataBase.verifyUser(email, password)){
             Client client = dataBase.saveClient(email);
-            vReservation.getLabelWelcome().setText("Bienvenido, " + client.getName() + " " + client.getLastName());
+            vReservation.getLabelWelcome().setText("Bienvenid@, " + client.getName() + " " + client.getLastName());
             vPayment.setVisible(false);
             vSignIn.setVisible(false);
             vReservation.setVisible(true);

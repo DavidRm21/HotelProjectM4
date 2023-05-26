@@ -1,8 +1,8 @@
 package interfaceWindow;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Font;
@@ -17,9 +17,11 @@ public abstract class AbstractPanel extends JPanel {
     private BufferedImage image;
     private JLabel[] spanText;
     private JLabel[] button;
+    private JTextField[] textInput;
 
 
-    public AbstractPanel(int text, int button, String root) {
+    public AbstractPanel(int text, int button, int inputText, String root) {
+        this.textInput = new JTextField[inputText];
         this.spanText = new JLabel[text];
         this.button = new JLabel[button];
 
@@ -75,6 +77,18 @@ public abstract class AbstractPanel extends JPanel {
         return button[pos];
     }
 
+    public JTextField drawInputText(int pos,  Font font, String text, int x, int y, int width, int height){
+        textInput[pos] = new JTextField(text);
+        textInput[pos].setBounds(x, y, width, height);
+        textInput[pos].setFont(font);
+        textInput[pos].setBorder(new EmptyBorder(0, 20, 0, 0));
+        textInput[pos].setBackground(new Color(190, 190, 190));
+        textInput[pos].setOpaque(true);
+        this.add(textInput[pos]);
+        textInput[pos].setVisible(true);
+        return textInput[pos];
+    }
+
 
     public JLabel[] getText() {
         return spanText;
@@ -84,4 +98,7 @@ public abstract class AbstractPanel extends JPanel {
         return button;
     }
 
+    public JTextField[] getTextInput() {
+        return textInput;
+    }
 }

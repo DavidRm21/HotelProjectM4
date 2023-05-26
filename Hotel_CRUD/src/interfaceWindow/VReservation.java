@@ -13,14 +13,12 @@ import java.util.List;
 
 public class VReservation extends AbstractPanel {
 
-    private JTextField[] textInput;
     private JTable table;
     private Font[] font;
     private JPanel tablaPanel;
 
     public VReservation(int text, int button, int font, int textInput ) {
-        super(text, button, "assets/HotelReceptionResize.jpg");
-        this.textInput = new JTextField[textInput];
+        super(text, button, textInput, "assets/HotelReceptionResize.jpg");
         this.font = new Font[font];
 
         drawComponents();
@@ -58,8 +56,8 @@ public class VReservation extends AbstractPanel {
         tablaPanel.setOpaque(true);
         this.add(tablaPanel);
 
-        drawInputText(0, 250, 533, 300, 30, "AAAA/MM/DD Inicio", font[2]);
-        drawInputText(1, 250, 585, 300, 30, "AAAA/MM/DD Final", font[2]);
+        drawInputText(0, font[2], "AAAA/MM/DD Inicio", 250, 533, 300, 30);
+        drawInputText(1, font[2], "AAAA/MM/DD Final", 250, 585, 300, 30);
 
 
 
@@ -91,9 +89,7 @@ public class VReservation extends AbstractPanel {
         table.setFont(new Font("Arima Madurai", Font.PLAIN, 18));
         table.isCellEditable(12, 4);
 
-        table.setShowGrid(true);
-
-
+        table.setShowGrid(false);
 
         JTableHeader headerColumn = table.getTableHeader();
         headerColumn.setPreferredSize(new Dimension(headerColumn.getWidth(), 40));
@@ -115,17 +111,6 @@ public class VReservation extends AbstractPanel {
         tablaPanel.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public void drawInputText(int pos, int x, int y, int width, int height, String text, Font font){
-        textInput[pos] = new JTextField(text);
-        textInput[pos].setBounds(x, y, width, height);
-        textInput[pos].setFont(font);
-        textInput[pos].setBorder(new EmptyBorder(0, 20, 0, 0));
-        textInput[pos].setBackground(new Color(190, 190, 190));
-        textInput[pos].setOpaque(true);
-        this.add(textInput[pos]);
-        textInput[pos].setVisible(true);
-    }
-
     public JLabel getButtonPeopleAdd(){
         return getText()[7];
     }
@@ -142,10 +127,10 @@ public class VReservation extends AbstractPanel {
         return getText()[11];
     }
     public JTextField getTextStart(){
-        return textInput[0];
+        return getTextInput()[0];
     }
     public JTextField getTextEnd(){
-        return textInput[1];
+        return getTextInput()[1];
     }
 
     public JLabel getLabelWelcome(){
