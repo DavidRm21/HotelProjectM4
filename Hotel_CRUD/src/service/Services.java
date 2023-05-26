@@ -2,7 +2,11 @@ package service;
 
 
 import inputMouse.MouseInputs;
-import interfaceWindow.*;
+import interfaceWindow.VPayment;
+import interfaceWindow.VReservation;
+import interfaceWindow.VSignIn;
+import interfaceWindow.VSignSystem;
+import interfaceWindow.InitPanel;
 import model.Client;
 import repository.DBQuery;
 import java.awt.Color;

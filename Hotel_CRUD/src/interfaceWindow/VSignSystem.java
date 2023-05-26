@@ -1,7 +1,10 @@
 package interfaceWindow;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.Color;
 
 public class VSignSystem extends AbstractPanel{
 

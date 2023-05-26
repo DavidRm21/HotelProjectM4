@@ -1,7 +1,9 @@
 package interfaceWindow;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -2,14 +2,20 @@ package interfaceWindow;
 
 import model.Room;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VReservation extends AbstractPanel {
 
@@ -36,8 +42,8 @@ public class VReservation extends AbstractPanel {
         drawLabel(2, font[2], "Final", 156, 585, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(3, font[2], "Personas", 772, 533, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(4, font[2], "Habitación", 772, 585, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(5, font[2], "0", 1050, 533, 20, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(6, font[2], "0", 1050, 585, 20, 33, Color.WHITE, JLabel.LEFT);
+        drawLabel(5, font[2], "0", 1050, 533, 40, 33, Color.WHITE, JLabel.LEFT);
+        drawLabel(6, font[2], "0", 1050, 585, 40, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(7, font[2], "+", 1100, 533, 20, 40, Color.WHITE, JLabel.CENTER);
         drawLabel(8, font[2], "+", 1100, 585, 20, 40, Color.WHITE, JLabel.CENTER);
         drawLabel(9, font[2], "-", 1000, 585, 20, 40, Color.WHITE, JLabel.CENTER);

@@ -37,7 +37,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             services.verifySuccess();
         }
         if(e.getSource() == vReservation.getButtonPeopleAdd()){
-            ++nPeople;
+            nPeople = (nPeople >= 0 && nPeople <= 10) ? ++nPeople : nPeople;
+            nPeople = (nPeople > 10) ? 10 : nPeople;
             vReservation.getText()[5].setText(String.valueOf(nPeople));
         }
         if (e.getSource() == vReservation.getButtonRoomAdd()){
@@ -45,7 +46,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vReservation.getText()[6].setText(String.valueOf(nRoom));
         }
         if (e.getSource() == vReservation.getButtonPeopleSubtract()){
-            --nPeople;
+            nPeople = (nPeople >= 0 && nPeople <= 10) ? --nPeople : (nPeople);
+            nPeople = (nPeople < 0) ? 0 : nPeople;
             vReservation.getText()[5].setText(String.valueOf(nPeople));
         }
         if(e.getSource() == vReservation.getButtonRoomSubtract()){
@@ -86,7 +88,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vSignSystem.setVisible(false);
             vSignIn.setVisible(true);
         }
-        
+
 
     }
 

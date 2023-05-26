@@ -3,7 +3,6 @@ package interfaceWindow;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.Color;
 

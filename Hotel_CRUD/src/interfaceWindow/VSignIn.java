@@ -1,7 +1,8 @@
 package interfaceWindow;
 
 import javax.swing.JLabel;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
 
 public class VSignIn extends AbstractPanel {
 
