@@ -29,6 +29,13 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(e.getSource() == vSignSystem.getButtonAccept()){
+            services.verifyEmailSuccess();
+        }
+        if(e.getSource() == vSignSystem.getButtonBack()){
+            vSignSystem.setVisible(false);
+            vSignIn.setVisible(true);
+        }
         if(e.getSource() == vSignIn.getButtonRecord()){
             vSignIn.setVisible(false);
             vSignSystem.setVisible(true);
@@ -37,34 +44,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             services.verifySuccess();
             services.updateTableModel();
         }
-        if(e.getSource() == vReservation.getButtonPeopleAdd()){
-            nPeople = (nPeople >= 0 && nPeople <= 10) ? ++nPeople : nPeople;
-            nPeople = (nPeople > 10) ? 10 : nPeople;
-            vReservation.getText()[5].setText(String.valueOf(nPeople));
+        if(e.getSource() == vSignIn.getInputMail()){
+            vSignIn.getTextInput()[0].setBackground(new Color(190, 190, 190));
         }
-        if (e.getSource() == vReservation.getButtonRoomAdd()){
-            ++nRoom;
-            vReservation.getText()[6].setText(String.valueOf(nRoom));
+        if(e.getSource() == vSignIn.getInputPass()){
+            vSignIn.getTextInput()[1].setBackground(new Color(190, 190, 190));
         }
-        if (e.getSource() == vReservation.getButtonPeopleSubtract()){
-            nPeople = (nPeople >= 0 && nPeople <= 10) ? --nPeople : (nPeople);
-            nPeople = (nPeople < 0) ? 0 : nPeople;
-            vReservation.getText()[5].setText(String.valueOf(nPeople));
-        }
-        if(e.getSource() == vReservation.getButtonRoomSubtract()){
-            --nRoom;
-            vReservation.getText()[6].setText(String.valueOf(nRoom));
-        }
-        if(e.getSource() == vReservation.getTextEnd()){
-            vReservation.getTextEnd().setText("");
-        }
-        if(e.getSource() == vReservation.getTextStart()){
-            vReservation.getTextStart().setText("");
-        }
-        if(e.getSource() == vPayment.getButtonPay()){
-            System.out.println("Pagar");
-        }
-        if(e.getSource() == vReservation.getButtonFinish()){
+
+        if(e.getSource() == vReservation.getButtonEnd()){
             int id= vReservation.getTable().getSelectedRow();
             if(services.verifyAvailable(services.getRoomsByIdClicked(id))){
                 vReservation.setVisible(false);
@@ -72,35 +59,25 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 services.setSummary(services.getRoomsByIdClicked(id));
             }
         }
-        if(e.getSource() == vPayment.getButtonBack()){
-            vPayment.setVisible(false);
-            vReservation.setVisible(true);
-        }
-        if(e.getSource() == vSignIn.getTextInput()[0]){
-            vSignIn.getTextInput()[0].setBackground(new Color(190, 190, 190));
-        }
-        if(e.getSource() == vSignIn.getTextInput()[1]){
-            vSignIn.getTextInput()[1].setBackground(new Color(190, 190, 190));
-        }
         if(e.getSource() == vReservation.getSignOut()){
             vReservation.setVisible(false);
-            vSignIn.setVisible(true);
-        }
-        if(e.getSource() == vSignSystem.getButtonAccept()){
-            services.verifyEmailSuccess();
-        }
-        if(e.getSource() == vSignSystem.getButtonBack()){
-            vSignSystem.setVisible(false);
             vSignIn.setVisible(true);
         }
         if(e.getSource() == vReservation.getTable()){
             int id = vReservation.getTable().getSelectedRow();
             services.getRoomsByIdClicked(id);
         }
-        if(e.getSource() == vReservation.getButtonSignOut()){
+        if(e.getSource() == vReservation.getSignOut()){
             services.resetInterfaces();
         }
 
+        if(e.getSource() == vPayment.getButtonBack()){
+            vPayment.setVisible(false);
+            vReservation.setVisible(true);
+        }
+        if(e.getSource() == vPayment.getButtonPay()){
+            System.out.println("Pagar");
+        }
 
     }
 
@@ -116,35 +93,41 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if(e.getSource() == vSignSystem.getButtonAccept()){
+            vSignSystem.getButtonAccept().setBackground(new Color(109, 129, 130));
+        }
+
         if(e.getSource() == vSignIn.getButtonRecord()){
             vSignIn.getButtonRecord().setBackground(new Color(28, 200, 18));
         }
         if(e.getSource() == vSignIn.getButtonLog()){
             vSignIn.getButtonLog().setBackground(new Color(21, 19, 181));
         }
+
         if(e.getSource() == vReservation.getButtonEnd()){
             vReservation.getButtonEnd().setBackground(new Color(21, 19, 181));
         }
-        if(e.getSource() == vSignSystem.getButtonAccept()){
-            vSignSystem.getButtonAccept().setBackground(new Color(109, 129, 130));
-        }
+
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        if(e.getSource() == vSignSystem.getButtonAccept()){
+            vSignSystem.getButtonAccept().setBackground(new Color(75, 116, 121));
+        }
+
         if(e.getSource() == vSignIn.getButtonRecord()){
             vSignIn.getButtonRecord().setBackground(new Color(28, 151, 18));
         }
         if(e.getSource() == vSignIn.getButtonLog()){
             vSignIn.getButtonLog().setBackground(new Color(21, 19, 111));
         }
+
         if(e.getSource() == vReservation.getButtonEnd()){
             vReservation.getButtonEnd().setBackground(new Color(21, 19, 111));
         }
-        if(e.getSource() == vSignSystem.getButtonAccept()){
-            vSignSystem.getButtonAccept().setBackground(new Color(75, 116, 121));
-        }
+
     }
 
     @Override

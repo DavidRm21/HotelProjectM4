@@ -1,9 +1,9 @@
 package vistas;
 
+import com.toedter.calendar.JDateChooser;
 import interfaceWindow.AbstractPanel;
 import model.Room;
 
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JPanel;
@@ -11,16 +11,14 @@ import javax.swing.BorderFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class VReservation extends AbstractPanel {
 
@@ -29,10 +27,12 @@ public class VReservation extends AbstractPanel {
     private Font[] font;
     private JPanel tablaPanel;
     private ArrayList<Room> roomList;
+    private JDateChooser[] calendar;
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, textInput, "assets/HotelReceptionResize.jpg");
         this.font = new Font[font];
+        this.calendar = new JDateChooser[2];
 
         drawComponents();
 
@@ -47,24 +47,16 @@ public class VReservation extends AbstractPanel {
         drawLabel(0, font[2], "Bienvenido, USUARIO", 30, 36, 365, 42, Color.WHITE, JLabel.LEFT);
         drawLabel(1, font[2], "Inicio", 156, 533, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(2, font[2], "Final", 156, 585, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(3, font[2], "Personas", 772, 533, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(4, font[2], "Habitación", 772, 585, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(5, font[2], "0", 1050, 533, 40, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(6, font[2], "0", 1050, 585, 40, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(7, font[2], "+", 1100, 533, 20, 40, Color.WHITE, JLabel.CENTER);
-        drawLabel(8, font[2], "+", 1100, 585, 20, 40, Color.WHITE, JLabel.CENTER);
-        drawLabel(9, font[2], "-", 1000, 585, 20, 40, Color.WHITE, JLabel.CENTER);
-        drawLabel(10, font[2], "-", 1000, 533, 20, 40, Color.WHITE, JLabel.CENTER);
-        drawLabel(14, font[3], "Cerrar Sesión", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
+        drawLabel(3, font[2], "Servicios", 772, 533, 200, 33, Color.WHITE, JLabel.LEFT);
+        drawLabel(4, font[3], "Cerrar Sesión", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
 
-        drawLabel(11, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
+        drawLabel(5, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
         getButtonEnd().setBackground(new Color(21, 19, 111));
         getButtonEnd().setOpaque(true);
-        drawLabel(12, font[2], "", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
-        getText()[12].setBackground(new Color(0,0,0,0));
-        getText()[12].setForeground(Color.black);
-        getText()[12].setOpaque(true);
-
+        drawLabel(6, font[2], "", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
+        getText()[6].setBackground(new Color(0,0,0,0));
+        getText()[6].setForeground(Color.black);
+        getText()[6].setOpaque(true);
 
         tablaPanel = new JPanel(new BorderLayout());
         tablaPanel.setBounds(88, 120, 1100, 368);
@@ -73,8 +65,13 @@ public class VReservation extends AbstractPanel {
         tablaPanel.setOpaque(true);
         this.add(tablaPanel);
 
-        drawInputText(0, font[2], "AAAA/MM/DD Inicio", 250, 533, 300, 30);
-        drawInputText(1, font[2], "AAAA/MM/DD Final", 250, 585, 300, 30);
+        drawDateTime(0, 250, 533, 150, 30, font[3]);
+        drawDateTime(1, 250, 585, 150, 30, font[3]);
+
+        int hour = LocalTime.now().getHour();
+        int minute = LocalTime.now().getMinute();
+        drawInputText(0, font[3], hour + " : " + minute, 430, 533, 150, 30);
+        drawInputText(1, font[3], hour + " : " + minute, 430, 585, 150, 30);
     }
 
     public ArrayList<Room> drawModel(ArrayList<Room> rooms){
@@ -128,47 +125,26 @@ public class VReservation extends AbstractPanel {
         table.repaint();
     }
 
-    public JLabel getButtonPeopleAdd(){
-        return getText()[7];
-    }
-    public JLabel getButtonPeopleSubtract(){
-        return getText()[10];
-    }
-    public JLabel getButtonRoomAdd(){
-        return getText()[8];
-    }
-    public JLabel getButtonRoomSubtract(){
-        return getText()[9];
-    }
-    public JLabel getButtonEnd(){
-        return getText()[11];
-    }
-    public JTextField getTextStart(){
-        return getTextInput()[0];
-    }
-    public JTextField getTextEnd(){
-        return getTextInput()[1];
+    public void drawDateTime(int pos, int x, int y, int width, int height, Font font){
+        calendar[pos] = new JDateChooser();
+        calendar[pos].setBounds(x, y, width, height);
+        calendar[pos].setFont(font);
+        calendar[pos].setBackground(Color.GRAY);
+        calendar[pos].setDate(new Date());
+        this.add(calendar[pos]);
     }
 
+    public JLabel getButtonEnd(){
+        return getText()[5];
+    }
     public JLabel getLabelWelcome(){
         return getText()[0];
     }
-    public JLabel getButtonFinish(){
-        return getText()[11];
-    }
     public JLabel getSignOut(){
-        return getText()[14];
+        return getText()[4];
     }
-
-    public JLabel getCountPerson(){
-        return getText()[5];
-    }
-    public JLabel getCountRoom(){
+    public JLabel isAvailableRoom(){
         return getText()[6];
-    }
-
-    public JLabel getButtonSignOut(){
-        return getText()[14];
     }
 
     public JTable getTable() {
@@ -177,5 +153,12 @@ public class VReservation extends AbstractPanel {
 
     public DefaultTableModel getModel() {
         return model;
+    }
+
+    public JDateChooser getStartDate() {
+        return calendar[0];
+    }
+    public JDateChooser getEndDate() {
+        return calendar[1];
     }
 }

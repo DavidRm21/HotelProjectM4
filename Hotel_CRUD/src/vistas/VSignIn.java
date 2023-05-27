@@ -2,7 +2,7 @@ package vistas;
 
 import interfaceWindow.AbstractPanel;
 
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -49,6 +49,14 @@ public class VSignIn extends AbstractPanel {
     public JLabel getButtonLog() {
         return getButton()[1];
     }
+
+    public JTextField getInputMail(){
+        return getTextInput()[0];
+    }
+    public JTextField getInputPass(){
+        return getTextInput()[1];
+    }
+
 
 
 }

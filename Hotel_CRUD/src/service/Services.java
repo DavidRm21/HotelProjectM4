@@ -1,6 +1,5 @@
 package service;
 
-
 import inputMouse.MouseInputs;
 import vistas.VPayment;
 import vistas.VReservation;
@@ -12,6 +11,7 @@ import model.Room;
 import repository.DBQuery;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Services {
 
@@ -24,7 +24,7 @@ public class Services {
     private DBQuery dataBase;
     private Client client;
     private ArrayList<Room> rooms;
-    private int label = 15, button = 6, font = 4, textField = 6;
+    private int label = 11, button = 6, font = 4, textField = 6;
 
 
     public Services() {
@@ -41,18 +41,13 @@ public class Services {
 
         vSignSystem.getButtonAccept().addMouseListener(inputs);
         vSignSystem.getButtonBack().addMouseListener(inputs);
+
         vSignIn.getButtonLog().addMouseListener(inputs);
         vSignIn.getButtonRecord().addMouseListener(inputs);
-        vSignIn.getTextInput()[0].addMouseListener(inputs);
-        vSignIn.getTextInput()[1].addMouseListener(inputs);
+        vSignIn.getInputMail().addMouseListener(inputs);
+        vSignIn.getInputPass().addMouseListener(inputs);
 
-        vReservation.getButtonPeopleAdd().addMouseListener(inputs);
-        vReservation.getButtonPeopleSubtract().addMouseListener(inputs);
-        vReservation.getButtonRoomAdd().addMouseListener(inputs);
-        vReservation.getButtonRoomSubtract().addMouseListener(inputs);
         vReservation.getButtonEnd().addMouseListener(inputs);
-        vReservation.getTextStart().addMouseListener(inputs);
-        vReservation.getTextEnd().addMouseListener(inputs);
         vReservation.getSignOut().addMouseListener(inputs);
         vReservation.getTable().addMouseListener(inputs);
 
@@ -125,14 +120,14 @@ public class Services {
         Room room = dataBase.getRoomById(habitacion_id);
         System.out.println(room.getId() + " | " + room.getType() + " | " + room.getPrice());
         if(room.isState()){
-            vReservation.getText()[12].setBackground(new Color(28, 151, 18));
-            vReservation.getText()[12].setText("Disponible");
+            vReservation.isAvailableRoom().setBackground(new Color(28, 151, 18));
+            vReservation.isAvailableRoom().setText("Disponible");
         } else if (!room.isState()) {
-            vReservation.getText()[12].setBackground(new Color(227, 111, 111));
-            vReservation.getText()[12].setText("Ocupado");
+            vReservation.isAvailableRoom().setBackground(new Color(227, 111, 111));
+            vReservation.isAvailableRoom().setText("Ocupado");
         } else{
-            vReservation.getText()[12].setBackground(new Color(100, 100, 100, 0));
-            vReservation.getText()[12].setText("");
+            vReservation.isAvailableRoom().setBackground(new Color(100, 100, 100, 0));
+            vReservation.isAvailableRoom().setText("");
         }
         return room;
     }
@@ -147,9 +142,8 @@ public class Services {
     public void resetInterfaces(){
         vReservation.drawModel(dataBase.readRooms());
         vReservation.drawModel(rooms);
-        vReservation.getCountPerson().setText("0");
-        vSignIn.getTextInput()[0].setText("");
-        vSignIn.getTextInput()[1].setText("");
+        vSignIn.getInputMail().setText("");
+        vSignIn.getInputPass().setText("");
 //        vPayment.drawComponents();
         for (int i = 0; i < vSignSystem.getTextInput().length; i++) {
             vSignSystem.getTextInput()[i].setText("");
@@ -171,13 +165,22 @@ public class Services {
         vPayment.getLabelType().setText(room.getType());
         vPayment.getLabelPrice().setText(String.valueOf(room.getPrice()));
         vPayment.getLabelCapability().setText(String.valueOf(room.getCapacity()));
-        vPayment.getLabelStartDate().setText(vReservation.getTextInput()[0].getText());
-        vPayment.getLabelEndDate().setText(vReservation.getTextInput()[1].getText());
+
+        Date startDate = vReservation.getStartDate().getDate();
+        Date endDate = vReservation.getEndDate().getDate();
+        vPayment.getLabelStartDate().setText(formatDate(startDate) + "");
+        vPayment.getLabelEndDate().setText(formatDate(endDate) + "");
+
         vPayment.getLabelServices().setText("Servicios");
         vPayment.getButtonPay().setText("Pagar: " + room.getPrice());
     }
 
-
-
+    // Formateo de fecha a formato que SQL admite
+    public Date formatDate(Date date){
+        Date format = date;
+        long d = format.getTime();
+        java.sql.Date dateSql = new java.sql.Date(d);
+        return dateSql;
+    }
 
 }
