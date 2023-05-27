@@ -1,6 +1,7 @@
 package service;
 
 import inputMouse.MouseInputs;
+import model.ServHotel;
 import vistas.VPayment;
 import vistas.VReservation;
 import vistas.VSignIn;
@@ -23,6 +24,7 @@ public class Services {
     private MouseInputs inputs;
     private DBQuery dataBase;
     private Client client;
+    private ArrayList<ServHotel> serviciosHotel;
     private ArrayList<Room> rooms;
     private int label = 11, button = 6, font = 4, textField = 6;
 
@@ -38,6 +40,7 @@ public class Services {
         initPanel = new InitPanel(vSignSystem, vSignIn, vReservation, vPayment);
         inputs = new MouseInputs(vSignSystem, vSignIn, vReservation, vPayment, this);
         rooms = vReservation.drawModel(dataBase.readRooms());
+        serviciosHotel = dataBase.readServiceHotel();
 
         vSignSystem.getButtonAccept().addMouseListener(inputs);
         vSignSystem.getButtonBack().addMouseListener(inputs);
@@ -182,5 +185,7 @@ public class Services {
         java.sql.Date dateSql = new java.sql.Date(d);
         return dateSql;
     }
+
+
 
 }

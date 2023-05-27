@@ -4,13 +4,9 @@ import com.toedter.calendar.JDateChooser;
 import interfaceWindow.AbstractPanel;
 import model.Room;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -28,11 +24,13 @@ public class VReservation extends AbstractPanel {
     private JPanel tablaPanel;
     private ArrayList<Room> roomList;
     private JDateChooser[] calendar;
+    private JCheckBox[] checkBox;
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, textInput, "assets/HotelReceptionResize.jpg");
         this.font = new Font[font];
         this.calendar = new JDateChooser[2];
+        this.checkBox = new JCheckBox[6];
 
         drawComponents();
 
@@ -47,7 +45,7 @@ public class VReservation extends AbstractPanel {
         drawLabel(0, font[2], "Bienvenido, USUARIO", 30, 36, 365, 42, Color.WHITE, JLabel.LEFT);
         drawLabel(1, font[2], "Inicio", 156, 533, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(2, font[2], "Final", 156, 585, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(3, font[2], "Servicios", 772, 533, 200, 33, Color.WHITE, JLabel.LEFT);
+        drawLabel(3, font[2], "Servicios", 772, 530, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(4, font[3], "Cerrar Sesión", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
 
         drawLabel(5, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
@@ -58,9 +56,16 @@ public class VReservation extends AbstractPanel {
         getText()[6].setForeground(Color.black);
         getText()[6].setOpaque(true);
 
+        drawCheckBox(0, 900, 530, font[3], "Desayuno");
+        drawCheckBox(1, 900, 555, font[3], "Cena");
+        drawCheckBox(2, 900, 580, font[3], "Club");
+        drawCheckBox(3, 1050, 530, font[3], "Traslado");
+        drawCheckBox(4, 1050, 555, font[3], "Spa");
+        drawCheckBox(5, 1050, 580, font[3], "Sauna");
+
         tablaPanel = new JPanel(new BorderLayout());
         tablaPanel.setBounds(88, 120, 1100, 368);
-        tablaPanel.setBackground(new Color(0, 0, 0));
+        tablaPanel.setBackground(new Color(0, 0, 0, 180));
         tablaPanel.setBorder(null);
         tablaPanel.setOpaque(true);
         this.add(tablaPanel);
@@ -134,6 +139,16 @@ public class VReservation extends AbstractPanel {
         this.add(calendar[pos]);
     }
 
+    public void drawCheckBox(int pos, int x, int y, Font font, String text){
+        checkBox[pos] = new JCheckBox();
+        checkBox[pos].setBounds(x, y, 130, 30);
+        checkBox[pos].setOpaque(false);
+        checkBox[pos].setText(text);
+        checkBox[pos].setFont(font);
+        checkBox[pos].setForeground(Color.WHITE);
+        this.add(checkBox[pos]);
+    }
+
     public JLabel getButtonEnd(){
         return getText()[5];
     }
@@ -161,4 +176,24 @@ public class VReservation extends AbstractPanel {
     public JDateChooser getEndDate() {
         return calendar[1];
     }
+
+    public JCheckBox getCheckBreak() {
+        return checkBox[0];
+    }
+    public JCheckBox getCheckDinner() {
+        return checkBox[1];
+    }
+    public JCheckBox getCheckClub() {
+        return checkBox[2];
+    }
+    public JCheckBox getCheckRelocation() {
+        return checkBox[3];
+    }
+    public JCheckBox getCheckSpa() {
+        return checkBox[4];
+    }
+    public JCheckBox getCheckSauna() {
+        return checkBox[5];
+    }
+
 }

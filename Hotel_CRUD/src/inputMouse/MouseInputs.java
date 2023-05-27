@@ -17,7 +17,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     private VReservation vReservation;
     private VPayment vPayment;
     private Services services;
-    private int nPeople = 0, nRoom = 0;
 
     public MouseInputs(VSignSystem vSignSystem, VSignIn vSignIn, VReservation vReservation, VPayment vPayment, Services services) {
         this.vSignSystem = vSignSystem;
@@ -29,6 +28,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         if(e.getSource() == vSignSystem.getButtonAccept()){
             services.verifyEmailSuccess();
         }

@@ -2,6 +2,9 @@ package repository;
 
 import model.Client;
 import model.Room;
+import model.ServHotel;
+
+import javax.xml.namespace.QName;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -189,6 +192,35 @@ public class DBQuery {
             System.out.println("[ERROR] "+ e);
         }
         return room;
+    }
+
+    public ArrayList<ServHotel> readServiceHotel(){
+        String query = "SELECT servicio_id, nombre, precio FROM servicio";
+        ArrayList<ServHotel> servHotel= new ArrayList<>();
+
+        int s_id ;
+        String name;
+        float price;
+
+        try{
+            conexion = connect.getConnection();
+            statement = conexion.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()) {
+                s_id = resultSet.getInt(1);
+                name = resultSet.getString(2);
+                price = resultSet.getFloat(3);
+
+                 servHotel.add(new ServHotel(
+                        s_id,
+                        name,
+                        price        ));
+            }
+        }catch (Exception e){
+            System.out.println("[ERROR] "+ e);
+        }
+        return servHotel;
     }
 
 
