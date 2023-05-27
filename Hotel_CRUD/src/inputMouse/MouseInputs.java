@@ -1,9 +1,9 @@
 package inputMouse;
 
-import interfaceWindow.VPayment;
-import interfaceWindow.VReservation;
-import interfaceWindow.VSignIn;
-import interfaceWindow.VSignSystem;
+import vistas.VPayment;
+import vistas.VReservation;
+import vistas.VSignIn;
+import vistas.VSignSystem;
 import service.Services;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -35,6 +35,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
         if(e.getSource() == vSignIn.getButtonLog()){
             services.verifySuccess();
+            services.updateTableModel();
         }
         if(e.getSource() == vReservation.getButtonPeopleAdd()){
             nPeople = (nPeople >= 0 && nPeople <= 10) ? ++nPeople : nPeople;
@@ -64,8 +65,12 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             System.out.println("Pagar");
         }
         if(e.getSource() == vReservation.getButtonFinish()){
-            vReservation.setVisible(false);
-            vPayment.setVisible(true);
+            int id= vReservation.getTable().getSelectedRow();
+            if(services.verifyAvailable(services.getRoomsByIdClicked(id))){
+                vReservation.setVisible(false);
+                vPayment.setVisible(true);
+                services.setSummary(services.getRoomsByIdClicked(id));
+            }
         }
         if(e.getSource() == vPayment.getButtonBack()){
             vPayment.setVisible(false);
@@ -87,6 +92,13 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         if(e.getSource() == vSignSystem.getButtonBack()){
             vSignSystem.setVisible(false);
             vSignIn.setVisible(true);
+        }
+        if(e.getSource() == vReservation.getTable()){
+            int id = vReservation.getTable().getSelectedRow();
+            services.getRoomsByIdClicked(id);
+        }
+        if(e.getSource() == vReservation.getButtonSignOut()){
+            services.resetInterfaces();
         }
 
 

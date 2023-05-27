@@ -19,7 +19,7 @@ public class DBQuery {
 
 
     public boolean verifyUser(String email, String password){
-        String query = "SELECT correo, contrasena FROM cliente WHERE correo = \"" + email + "\" AND contrasena = \"" + password + "\"";
+        String query = "SELECT correo, contrasena FROM cliente WHERE correo = \"" + email + "\" AND contrasena REGEXP BINARY \'" + password + "\'";
 
         try{
             conexion = connect.getConnection();
@@ -139,21 +139,57 @@ public class DBQuery {
     public void insertNewClient(int id, String name, String lastName, String email, String password, String phone){
         String query = "INSERT INTO cliente (cliente_id, nombre, apellido, correo, contrasena, telefono) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
-            try{
-                conexion = connect.getConnection();
-                preparedStatement = conexion.prepareStatement(query);
-                preparedStatement.setInt(1, id);
-                preparedStatement.setString(2, name);
-                preparedStatement.setString(3, lastName);
-                preparedStatement.setString(4, email);
-                preparedStatement.setString(5, password);
-                preparedStatement.setString(6, phone);
+        try{
+            conexion = connect.getConnection();
+            preparedStatement = conexion.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, email);
+            preparedStatement.setString(5, password);
+            preparedStatement.setString(6, phone);
 
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            }catch (Exception e){
-                System.out.println("[ERROR] " + e);
-            }
+        }catch (Exception e){
+            System.out.println("[ERROR] " + e);
         }
+    }
+
+    public Room getRoomById(int id){
+        String query = "SELECT habitacion_id, tipo, precio, capacidad, estado FROM habitacion WHERE habitacion_id = " + id;
+
+        Room room = null;
+        int h_id = 0;
+        String type;
+        float price;
+        int capability;
+        boolean state;
+
+        try{
+            conexion = connect.getConnection();
+            statement = conexion.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()) {
+                h_id = resultSet.getInt(1);
+                type = resultSet.getString(2);
+                price = resultSet.getFloat(3);
+                capability = resultSet.getInt(4);
+                state = resultSet.getBoolean(5);
+
+                room = new Room(
+                        h_id,
+                        type,
+                        price,
+                        capability,
+                        state     );
+            }
+        }catch (Exception e){
+            System.out.println("[ERROR] "+ e);
+        }
+        return room;
+    }
+
 
 }

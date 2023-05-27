@@ -1,5 +1,10 @@
 package interfaceWindow;
 
+import vistas.VPayment;
+import vistas.VReservation;
+import vistas.VSignIn;
+import vistas.VSignSystem;
+
 public class InitPanel {
 
     private FrameWindow frame;

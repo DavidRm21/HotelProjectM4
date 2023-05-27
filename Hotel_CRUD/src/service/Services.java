@@ -2,14 +2,16 @@ package service;
 
 
 import inputMouse.MouseInputs;
-import interfaceWindow.VPayment;
-import interfaceWindow.VReservation;
-import interfaceWindow.VSignIn;
-import interfaceWindow.VSignSystem;
+import vistas.VPayment;
+import vistas.VReservation;
+import vistas.VSignIn;
+import vistas.VSignSystem;
 import interfaceWindow.InitPanel;
 import model.Client;
+import model.Room;
 import repository.DBQuery;
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Services {
 
@@ -21,6 +23,7 @@ public class Services {
     private MouseInputs inputs;
     private DBQuery dataBase;
     private Client client;
+    private ArrayList<Room> rooms;
     private int label = 15, button = 6, font = 4, textField = 6;
 
 
@@ -30,14 +33,14 @@ public class Services {
         vSignSystem = new VSignSystem(label, button, font, textField);
         vSignIn = new VSignIn(label, button, font, textField);
         vReservation = new VReservation(label, button, font, textField);
-        vPayment = new VPayment(label, button, font, textField);
+        vPayment = new VPayment(18, button, font, textField);
 
         initPanel = new InitPanel(vSignSystem, vSignIn, vReservation, vPayment);
         inputs = new MouseInputs(vSignSystem, vSignIn, vReservation, vPayment, this);
+        rooms = vReservation.drawModel(dataBase.readRooms());
 
         vSignSystem.getButtonAccept().addMouseListener(inputs);
         vSignSystem.getButtonBack().addMouseListener(inputs);
-
         vSignIn.getButtonLog().addMouseListener(inputs);
         vSignIn.getButtonRecord().addMouseListener(inputs);
         vSignIn.getTextInput()[0].addMouseListener(inputs);
@@ -51,15 +54,14 @@ public class Services {
         vReservation.getTextStart().addMouseListener(inputs);
         vReservation.getTextEnd().addMouseListener(inputs);
         vReservation.getSignOut().addMouseListener(inputs);
-
-        vReservation.drawModel(dataBase.readRooms());
-
+        vReservation.getTable().addMouseListener(inputs);
 
         vPayment.getButtonPay().addMouseListener(inputs);
         vPayment.getButtonBack().addMouseListener(inputs);
 
     }
 
+    // Verificar si el usuario y la contraseña existe en la tabla clientes
     public void verifySuccess(){
         String mail = vSignIn.getTextInput()[0].getText();
         String pass = vSignIn.getTextInput()[1].getText();
@@ -76,6 +78,7 @@ public class Services {
         }
     }
 
+    // Verificar si el correo ya existe.
     public void verifyEmailSuccess(){
 
         String email = vSignSystem.getTextEmail().getText();
@@ -115,6 +118,66 @@ public class Services {
             }
         }
     }
+
+    // Obtener la habitacion por el evento de click
+    public Room getRoomsByIdClicked(int id){
+        int habitacion_id = rooms.get(id).getId();
+        Room room = dataBase.getRoomById(habitacion_id);
+        System.out.println(room.getId() + " | " + room.getType() + " | " + room.getPrice());
+        if(room.isState()){
+            vReservation.getText()[12].setBackground(new Color(28, 151, 18));
+            vReservation.getText()[12].setText("Disponible");
+        } else if (!room.isState()) {
+            vReservation.getText()[12].setBackground(new Color(227, 111, 111));
+            vReservation.getText()[12].setText("Ocupado");
+        } else{
+            vReservation.getText()[12].setBackground(new Color(100, 100, 100, 0));
+            vReservation.getText()[12].setText("");
+        }
+        return room;
+    }
+
+    // Actualizar la tabla
+    public void updateTableModel(){
+        vReservation.getModel().fireTableDataChanged();
+        vReservation.getTable().repaint();
+    }
+
+    // Resetear los componentes al salir de sesión
+    public void resetInterfaces(){
+        vReservation.drawModel(dataBase.readRooms());
+        vReservation.drawModel(rooms);
+        vReservation.getCountPerson().setText("0");
+        vSignIn.getTextInput()[0].setText("");
+        vSignIn.getTextInput()[1].setText("");
+//        vPayment.drawComponents();
+        for (int i = 0; i < vSignSystem.getTextInput().length; i++) {
+            vSignSystem.getTextInput()[i].setText("");
+        }
+    }
+
+    // Verificar la disponibilidad de la habitación
+    public boolean verifyAvailable(Room room){
+        if(room.isState()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // Presentar el resumen de la reserva
+    public void setSummary(Room room){
+        vPayment.getLabelRoom().setText(String.valueOf(room.getId()));
+        vPayment.getLabelType().setText(room.getType());
+        vPayment.getLabelPrice().setText(String.valueOf(room.getPrice()));
+        vPayment.getLabelCapability().setText(String.valueOf(room.getCapacity()));
+        vPayment.getLabelStartDate().setText(vReservation.getTextInput()[0].getText());
+        vPayment.getLabelEndDate().setText(vReservation.getTextInput()[1].getText());
+        vPayment.getLabelServices().setText("Servicios");
+        vPayment.getButtonPay().setText("Pagar: " + room.getPrice());
+    }
+
+
 
 
 }

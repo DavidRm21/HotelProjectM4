@@ -1,5 +1,6 @@
-package interfaceWindow;
+package vistas;
 
+import interfaceWindow.AbstractPanel;
 import model.Room;
 
 import javax.swing.JTextField;
@@ -10,18 +11,24 @@ import javax.swing.BorderFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class VReservation extends AbstractPanel {
 
+    private DefaultTableModel model;
     private JTable table;
     private Font[] font;
     private JPanel tablaPanel;
+    private ArrayList<Room> roomList;
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, textInput, "assets/HotelReceptionResize.jpg");
@@ -53,7 +60,11 @@ public class VReservation extends AbstractPanel {
         drawLabel(11, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
         getButtonEnd().setBackground(new Color(21, 19, 111));
         getButtonEnd().setOpaque(true);
-        drawLabel(12, font[2], "Disponible", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
+        drawLabel(12, font[2], "", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
+        getText()[12].setBackground(new Color(0,0,0,0));
+        getText()[12].setForeground(Color.black);
+        getText()[12].setOpaque(true);
+
 
         tablaPanel = new JPanel(new BorderLayout());
         tablaPanel.setBounds(88, 120, 1100, 368);
@@ -64,16 +75,13 @@ public class VReservation extends AbstractPanel {
 
         drawInputText(0, font[2], "AAAA/MM/DD Inicio", 250, 533, 300, 30);
         drawInputText(1, font[2], "AAAA/MM/DD Final", 250, 585, 300, 30);
-
-
-
     }
 
-    public void drawModel(ArrayList<Room> rooms){
-        ArrayList<Room> roomList = rooms;
+    public ArrayList<Room> drawModel(ArrayList<Room> rooms){
+        roomList = rooms;
         String[] columnNames = {"Número", "Tipo", "Capacidad", "Precio", "Estado"};
 
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
         for(String column : columnNames){
             model.addColumn(column);
         }
@@ -83,6 +91,7 @@ public class VReservation extends AbstractPanel {
         }
 
         drawTable(model);
+        return rooms;
     }
 
     public void drawTable(DefaultTableModel model){
@@ -95,7 +104,7 @@ public class VReservation extends AbstractPanel {
         table.setFont(new Font("Arima Madurai", Font.PLAIN, 18));
         table.isCellEditable(12, 4);
 
-        table.setShowGrid(false);
+        table.setShowGrid(true);
 
         JTableHeader headerColumn = table.getTableHeader();
         headerColumn.setPreferredSize(new Dimension(headerColumn.getWidth(), 40));
@@ -115,6 +124,8 @@ public class VReservation extends AbstractPanel {
         }
 
         tablaPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+        getModel().fireTableDataChanged();
+        table.repaint();
     }
 
     public JLabel getButtonPeopleAdd(){
@@ -149,8 +160,22 @@ public class VReservation extends AbstractPanel {
         return getText()[14];
     }
 
+    public JLabel getCountPerson(){
+        return getText()[5];
+    }
+    public JLabel getCountRoom(){
+        return getText()[6];
+    }
 
+    public JLabel getButtonSignOut(){
+        return getText()[14];
+    }
 
+    public JTable getTable() {
+        return table;
+    }
 
-
+    public DefaultTableModel getModel() {
+        return model;
+    }
 }

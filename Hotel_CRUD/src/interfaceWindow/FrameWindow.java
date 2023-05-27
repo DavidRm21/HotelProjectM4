@@ -1,5 +1,10 @@
 package interfaceWindow;
 
+import vistas.VPayment;
+import vistas.VReservation;
+import vistas.VSignIn;
+import vistas.VSignSystem;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
