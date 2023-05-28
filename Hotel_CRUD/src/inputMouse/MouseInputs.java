@@ -83,7 +83,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vReservation.setVisible(true);
         }
         if(e.getSource() == vPayment.getButtonPay()){
-            JOptionPane.showMessageDialog(null, "Reserva exitosa ");
+            services.endReservation();
         }
 
     }

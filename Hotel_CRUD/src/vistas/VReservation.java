@@ -170,10 +170,15 @@ public class VReservation extends AbstractPanel {
     public JDateChooser getStartDate() {
         return calendar[0];
     }
+    public JTextField getStartTime(){
+        return getTextInput()[0];
+    }
     public JDateChooser getEndDate() {
         return calendar[1];
     }
-
+    public JTextField getEndTime(){
+        return getTextInput()[1];
+    }
     public JCheckBox getCheckBreak() {
         return checkBox[0];
     }

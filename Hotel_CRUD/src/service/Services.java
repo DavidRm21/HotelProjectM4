@@ -10,6 +10,7 @@ import interfaceWindow.InitPanel;
 import model.Client;
 import model.Room;
 import repository.DBQuery;
+import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class Services {
     private Room room;
     private List<ServHotel> servicesSelected;
     private ArrayList<Room> rooms;
+    private ArrayList<ServHotel> serviciosHotel;
     private Color required;
     private int label = 11, button = 6, font = 4, textField = 6;
 
@@ -183,7 +185,7 @@ public class Services {
     }
 
     // Formateo de fecha a formato que SQL admite
-    public Date formatDate(Date date){
+    public java.sql.Date formatDate(Date date){
         Date format = date;
         long d = format.getTime();
         java.sql.Date dateSql = new java.sql.Date(d);
@@ -192,7 +194,7 @@ public class Services {
 
     // Obtener el total de la reserva
     public float getTotal(){
-        ArrayList<ServHotel> serviciosHotel = dataBase.readServiceHotel();
+        serviciosHotel = dataBase.readServiceHotel();
         servicesSelected = new ArrayList<>();
         float total = 0;
 
@@ -204,6 +206,30 @@ public class Services {
         }
         total += room.getPrice();
         return total;
+    }
+
+    public void endReservation(){
+        String in = JOptionPane.showInputDialog("Numero de la factura: ");
+        int reservation = (in != null ) ? Integer.parseInt(in) : -1;
+        if (reservation > 0){
+            int cl = client.getId();
+            int hb = room.getId();
+            java.sql.Date dtS = formatDate(vReservation.getStartDate().getDate());
+            java.sql.Date dtE = formatDate(vReservation.getEndDate().getDate());
+            String tS = vReservation.getStartTime().getText();
+            String tE = vReservation.getEndTime().getText();
+
+            dataBase.insertReservation(reservation, cl, hb, dtS, dtE, tS, tE);
+
+            if(servicesSelected.size() > 0){
+                for(int i = 0; i < servicesSelected.size(); i++){
+                    dataBase.insertReservation(reservation, servicesSelected.get(i).getId());
+                }
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Entrada incorrecta.");
+        }
     }
 
 }

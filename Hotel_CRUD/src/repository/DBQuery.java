@@ -6,10 +6,7 @@ import model.ServHotel;
 
 import javax.swing.*;
 import javax.xml.namespace.QName;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 
 
@@ -224,6 +221,49 @@ public class DBQuery {
             System.out.println("[ERROR] "+ e);
         }
         return servHotel;
+    }
+
+    public  void insertReservation(int rv, int cl, int hb, Date dtS, Date dtE, String tS, String tE){
+        String query = "INSERT INTO reserva(reserva_id, cliente_id, habitacion_id, fecha_inicio, fecha_fin, hora_inicial, hora_final) VALUES \n" +
+                "(?, ?, ?, ?, ?, ?, ?);";
+
+        try{
+            conexion = connect.getConnection();
+            preparedStatement = conexion.prepareStatement(query);
+
+            preparedStatement.setInt(1, rv);
+            preparedStatement.setInt(2, cl);
+            preparedStatement.setInt(3, hb);
+            preparedStatement.setDate(4, dtS);
+            preparedStatement.setDate(5, dtE);
+            preparedStatement.setString(6, tS);
+            preparedStatement.setString(7, tE);
+
+            preparedStatement.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Registro exitoso");
+
+        }catch (Exception e){
+            System.out.println("[ERROR] " + e);
+        }
+
+    }
+    public  void insertReservation(int rv, int srv){
+        String query = "INSERT INTO reserva_servicio (reserva_id, servicio_id) VALUES \n" +
+                "(?, ?);";
+
+        try{
+            conexion = connect.getConnection();
+            preparedStatement = conexion.prepareStatement(query);
+
+            preparedStatement.setInt(1, rv);
+            preparedStatement.setInt(2, srv);
+
+            preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            System.out.println("[ERROR] " + e);
+        }
     }
 
 
