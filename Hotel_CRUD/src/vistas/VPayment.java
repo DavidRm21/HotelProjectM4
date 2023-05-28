@@ -55,7 +55,7 @@ public class VPayment extends AbstractPanel {
         getText()[0].add(textServices);
 
         drawLabel(16, font[2], "Pagar: $0.0", 375, 460, 350, 70, Color.WHITE, JLabel.CENTER);
-        getButtonPay().setBackground(new Color(144, 142, 249, 200));
+        getButtonPay().setBackground(new Color(16, 107, 110));
         getButtonPay().setOpaque(true);
         getText()[0].add(getText()[16]);
 

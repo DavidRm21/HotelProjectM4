@@ -37,7 +37,7 @@ public class Services {
     public Services() {
 
         dataBase = new DBQuery();
-        required = new Color(227, 111, 111);
+        required = new Color(235, 92, 97);
         vSignSystem = new VSignSystem(label, button, font, textField);
         vSignIn = new VSignIn(label, button, font, textField);
         vReservation = new VReservation(label, button, font, textField);
@@ -130,16 +130,10 @@ public class Services {
         return room;
     }
 
-    // Actualizar la tabla
-    public void updateTableModel(){
-        vReservation.createModel(rooms, inputs);
-        vReservation.getModel().fireTableDataChanged();
-        vReservation.getTable().repaint();
-    }
-
     // Resetear los componentes al salir de sesión
     public void resetInterfaces(){
         vReservation.getTable().clearSelection();
+        vReservation.getModel().getDataVector().removeAllElements();
         vSignIn.getInputMail().setText("");
         vSignIn.getInputPass().setText("");
         vReservation.getCheckSauna().setSelected(false);

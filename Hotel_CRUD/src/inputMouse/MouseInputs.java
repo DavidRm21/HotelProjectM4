@@ -44,7 +44,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
         if(e.getSource() == vSignIn.getButtonLog()){
             services.verifySuccess();
-            services.updateTableModel();
         }
         if(e.getSource() == vSignIn.getInputMail()){
             vSignIn.getTextInput()[0].setBackground(new Color(190, 190, 190));
@@ -55,13 +54,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
         if(e.getSource() == vReservation.getButtonEnd()){
             int id= vReservation.getTable().getSelectedRow();
-            if(services.verifyAvailable(services.getRoomsByIdClicked(id)) && vReservation.getTable().getSelectedRow() >= 0){
+            if(services.verifyAvailable(services.getRoomsByIdClicked(id)) && vReservation.getTable().isRowSelected(id)){
 
                 vReservation.setVisible(false);
                 vPayment.setVisible(true);
                 total = services.getTotal();
                 services.setSummary(services.getRoomsByIdClicked(id));
                 vPayment.getButtonPay().setText("Pagar: " + total);
+
             }
         }
         if(e.getSource() == vReservation.getSignOut()){
@@ -72,6 +72,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             int id = vReservation.getTable().getSelectedRow();
             services.getRoomsByIdClicked(id);
         }
+
+
         if(e.getSource() == vReservation.getSignOut()){
             services.resetInterfaces();
         }
@@ -99,18 +101,22 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if(e.getSource() == vSignSystem.getButtonAccept()){
-            vSignSystem.getButtonAccept().setBackground(new Color(109, 129, 130));
+            vSignSystem.getButtonAccept().setBackground(new Color(17, 153, 168));
         }
 
         if(e.getSource() == vSignIn.getButtonRecord()){
-            vSignIn.getButtonRecord().setBackground(new Color(28, 200, 18));
+            vSignIn.getButtonRecord().setBackground(new Color(217, 108, 28));
         }
         if(e.getSource() == vSignIn.getButtonLog()){
-            vSignIn.getButtonLog().setBackground(new Color(21, 19, 181));
+            vSignIn.getButtonLog().setBackground(new Color(17, 153, 168));
         }
 
         if(e.getSource() == vReservation.getButtonEnd()){
-            vReservation.getButtonEnd().setBackground(new Color(21, 19, 181));
+            vReservation.getButtonEnd().setBackground(new Color(72, 92, 130));
+        }
+
+        if(e.getSource() == vPayment.getButtonPay()){
+            vPayment.getButtonPay().setBackground(new Color(0, 143, 148));
         }
 
 
@@ -119,18 +125,22 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     @Override
     public void mouseExited(MouseEvent e) {
         if(e.getSource() == vSignSystem.getButtonAccept()){
-            vSignSystem.getButtonAccept().setBackground(new Color(75, 116, 121));
+            vSignSystem.getButtonAccept().setBackground(new Color(0, 83, 93));
         }
 
         if(e.getSource() == vSignIn.getButtonRecord()){
-            vSignIn.getButtonRecord().setBackground(new Color(28, 151, 18));
+            vSignIn.getButtonRecord().setBackground(new Color(140, 67, 13));
         }
         if(e.getSource() == vSignIn.getButtonLog()){
-            vSignIn.getButtonLog().setBackground(new Color(21, 19, 111));
+            vSignIn.getButtonLog().setBackground(new Color(0, 83, 93));
         }
 
         if(e.getSource() == vReservation.getButtonEnd()){
-            vReservation.getButtonEnd().setBackground(new Color(21, 19, 111));
+            vReservation.getButtonEnd().setBackground(new Color(19, 31, 54));
+        }
+
+        if(e.getSource() == vPayment.getButtonPay()){
+            vPayment.getButtonPay().setBackground(new Color(16, 107, 110));
         }
 
     }

@@ -41,7 +41,7 @@ public class VSignSystem extends AbstractPanel {
         getText()[10].add(drawLabel(7, font[3], "Contraseña: ", 290, 430, 400, 40, Color.WHITE, JLabel.LEFT));
         getText()[10].add(drawLabel(8, font[3], "", 30, 20, 60, 60, Color.WHITE, JLabel.LEFT));
         getText()[10].add(drawLabel(9, font[2], "Aceptar", 800, 500, 150, 50, Color.WHITE, JLabel.CENTER));
-        getButtonAccept().setBackground(new Color(75, 116, 121));
+        getButtonAccept().setBackground(new Color(0, 83, 93));
         getButtonAccept().setOpaque(true);
         ImageIcon icon = new ImageIcon("assets/atras1.png");
         getButtonBack().setIcon(icon);

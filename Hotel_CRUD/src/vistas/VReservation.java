@@ -64,7 +64,7 @@ public class VReservation extends AbstractPanel {
         drawLabel(4, font[3], "         ", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
 
         drawLabel(5, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
-        getButtonEnd().setBackground(new Color(21, 19, 111));
+        getButtonEnd().setBackground(new Color(19, 31, 54));
         getButtonEnd().setOpaque(true);
         drawLabel(6, font[2], "", 1140, 130, 20, 20, Color.GRAY, JLabel.CENTER);
         getText()[6].setBackground(new Color(0,0,0,0));
@@ -92,6 +92,7 @@ public class VReservation extends AbstractPanel {
         String[] columnNames = {"Número", "Tipo", "Capacidad", "Precio", "Estado"};
 
         model = new DefaultTableModel();
+
         for(String column : columnNames){
             model.addColumn(column);
         }
@@ -104,27 +105,28 @@ public class VReservation extends AbstractPanel {
 
     public void drawTable(DefaultTableModel model, MouseInputs inputs){
 
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setBorder(null);
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        cellRenderer.setBackground(new Color(87,69, 45));
+        cellRenderer.setForeground(Color.WHITE);
+
         table = new JTable(model);
         table.setBorder(new EmptyBorder(5,5,5,5));
         table.setRowHeight(27);
         table.setFont(new Font("Arima Madurai", Font.PLAIN, 18));
         table.setBackground(new Color(30,30,30));
+        table.setDefaultEditor(Object.class, null);
+        table.setDefaultRenderer(Object.class, cellRenderer);
+        table.setShowGrid(false);
+        table.setShowHorizontalLines(false);
+        table.setShowVerticalLines(true);
 
         JTableHeader headerColumn = table.getTableHeader();
         headerColumn.setPreferredSize(new Dimension(headerColumn.getWidth(), 40));
-        headerColumn.setBackground(new Color(0,0,0));
+        headerColumn.setBackground(new Color(66,49,27));
         headerColumn.setFont(new Font("Arima Madurai", Font.BOLD, 26));
         headerColumn.setForeground(Color.WHITE);
-
-        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-        cellRenderer.setBorder(BorderFactory.createEmptyBorder());
-        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
-        cellRenderer.setBackground(new Color(0, 0, 0));
-        cellRenderer.setForeground(Color.WHITE);
-
-        for (int i = 0; i < 5; i++){
-            table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
-        }
 
         tablaPanel.add(new JScrollPane(table), BorderLayout.CENTER);
         table.addMouseListener(inputs);
