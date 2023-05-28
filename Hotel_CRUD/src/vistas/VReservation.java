@@ -4,8 +4,13 @@ import com.toedter.calendar.JDateChooser;
 import inputMouse.MouseInputs;
 import interfaceWindow.AbstractPanel;
 import model.Room;
-
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
@@ -45,6 +50,13 @@ public class VReservation extends AbstractPanel {
         font[2] =new Font("Arima Madurai", Font.BOLD, 24);
         font[3] =new Font("Arima Madurai", Font.BOLD, 18);
 
+        tablaPanel = new JPanel(new BorderLayout());
+        tablaPanel.setBounds(88, 120, 1100, 368);
+        tablaPanel.setBackground(new Color(0, 0, 0, 180));
+        tablaPanel.setBorder(null);
+        tablaPanel.setOpaque(true);
+        this.add(tablaPanel);
+
         drawLabel(0, font[2], "Bienvenido, USUARIO", 30, 36, 365, 42, Color.WHITE, JLabel.LEFT);
         drawLabel(1, font[2], "Inicio", 156, 533, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(2, font[2], "Final", 156, 585, 200, 33, Color.WHITE, JLabel.LEFT);
@@ -54,7 +66,7 @@ public class VReservation extends AbstractPanel {
         drawLabel(5, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
         getButtonEnd().setBackground(new Color(21, 19, 111));
         getButtonEnd().setOpaque(true);
-        drawLabel(6, font[2], "", 1090, 50, 100, 25, Color.GRAY, JLabel.CENTER);
+        drawLabel(6, font[2], "", 1140, 130, 20, 20, Color.GRAY, JLabel.CENTER);
         getText()[6].setBackground(new Color(0,0,0,0));
         getText()[6].setForeground(Color.black);
         getText()[6].setOpaque(true);
@@ -65,13 +77,6 @@ public class VReservation extends AbstractPanel {
         drawCheckBox(3, 1050, 530, font[3], "Traslado");
         drawCheckBox(4, 1050, 555, font[3], "Spa");
         drawCheckBox(5, 1050, 580, font[3], "Sauna");
-
-        tablaPanel = new JPanel(new BorderLayout());
-        tablaPanel.setBounds(88, 120, 1100, 368);
-        tablaPanel.setBackground(new Color(0, 0, 0, 180));
-        tablaPanel.setBorder(null);
-        tablaPanel.setOpaque(true);
-        this.add(tablaPanel);
 
         drawDateTime(0, 250, 533, 150, 30, font[3]);
         drawDateTime(1, 250, 585, 150, 30, font[3]);

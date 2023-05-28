@@ -3,10 +3,12 @@ package repository;
 import model.Client;
 import model.Room;
 import model.ServHotel;
-
-import javax.swing.*;
-import javax.xml.namespace.QName;
-import java.sql.*;
+import javax.swing.JOptionPane;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 

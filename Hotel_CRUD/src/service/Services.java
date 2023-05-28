@@ -46,7 +46,6 @@ public class Services {
         initPanel = new InitPanel(vSignSystem, vSignIn, vReservation, vPayment);
         inputs = new MouseInputs(vSignSystem, vSignIn, vReservation, vPayment, this);
         servicesSelected = new ArrayList<>();
-        rooms = dataBase.readRooms();
 
         vSignSystem.getButtonAccept().addMouseListener(inputs);
         vSignSystem.getButtonBack().addMouseListener(inputs);
@@ -71,11 +70,11 @@ public class Services {
 
         if(dataBase.verifyUser(mail, pass)){
             client = dataBase.saveClient(mail);
+            rooms = dataBase.readRooms();
             vSignIn.setVisible(false);
             vReservation.setVisible(true);
             vReservation.getLabelWelcome().setText("Bienvenid@, " + client.getName() + " " + client.getLastName());
             vReservation.createModel(rooms, inputs);
-//            vReservation.getTable().addMouseListener(inputs);
         }else{
             vSignIn.getTextInput()[0].setBackground(required);
             vSignIn.getTextInput()[1].setBackground(required);
@@ -140,6 +139,7 @@ public class Services {
 
     // Resetear los componentes al salir de sesión
     public void resetInterfaces(){
+        vReservation.getTable().clearSelection();
         vSignIn.getInputMail().setText("");
         vSignIn.getInputPass().setText("");
         vReservation.getCheckSauna().setSelected(false);
