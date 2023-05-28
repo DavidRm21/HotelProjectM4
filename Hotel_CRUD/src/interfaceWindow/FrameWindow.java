@@ -32,7 +32,7 @@ public class FrameWindow {
         cardPanel.add(two, "Reservation");
         cardPanel.add(three, "Payment");
 
-        cardLayout.show(cardPanel, "Reservation");
+        cardLayout.show(cardPanel, "Sign_in");
 
         jFrame.getContentPane().add(cardPanel);
 

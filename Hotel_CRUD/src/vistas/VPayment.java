@@ -2,13 +2,13 @@ package vistas;
 
 import interfaceWindow.AbstractPanel;
 
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
 public class VPayment extends AbstractPanel {
     private Font[] font;
+    private JTextArea textServices;
 
     public VPayment(int text, int button, int font, int textInput) {
         super(text, button, textInput, "assets/HotelFinalResize.jpg");
@@ -41,9 +41,18 @@ public class VPayment extends AbstractPanel {
         getText()[0].add(drawLabel(10, font[2], "", 370, 250, 266, 40, Color.WHITE, JLabel.LEFT));
         getText()[0].add(drawLabel(11, font[2], "Fecha final: ", 170, 300, 266, 40, Color.WHITE, JLabel.LEFT));
         getText()[0].add(drawLabel(12, font[2], "", 370, 300, 266, 40, Color.WHITE, JLabel.LEFT));
-        getText()[0].add(drawLabel(13, font[2], "Servicio: ", 170, 350, 266, 40, Color.WHITE, JLabel.LEFT));
-        getText()[0].add(drawLabel(14, font[2], "", 370, 350, 600, 40, Color.WHITE, JLabel.LEFT));
+        getText()[0].add(drawLabel(13, font[2], "Servicios: ", 630, 250, 266, 40, Color.WHITE, JLabel.LEFT));
+        getText()[0].add(drawLabel(14, font[2], "", 630, 350, 300, 100, Color.WHITE, JLabel.LEFT));
         getText()[0].add(drawLabel(15, font[2], "", 50, 50, 50, 50, Color.WHITE, JLabel.LEFT));
+
+        textServices = new JTextArea();
+        textServices.setBounds(630, 300, 200, 100);
+        textServices.setText("");
+        textServices.setBackground(new Color(0,0,0,0));
+        textServices.setForeground(Color.WHITE);
+        textServices.setFont(new Font("Arima Madurai", Font.BOLD, 14));
+        textServices.setEditable(false);
+        getText()[0].add(textServices);
 
         drawLabel(16, font[2], "Pagar: $0.0", 375, 460, 350, 70, Color.WHITE, JLabel.CENTER);
         getButtonPay().setBackground(new Color(144, 142, 249, 200));
@@ -85,8 +94,8 @@ public class VPayment extends AbstractPanel {
     public JLabel getLabelEndDate(){
         return getText()[12];
     }
-    public JLabel getLabelServices(){
-        return getText()[14];
+    public JTextArea getTextServices(){
+        return textServices;
     }
 
 

@@ -13,25 +13,29 @@ import repository.DBQuery;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Services {
 
+    private DBQuery dataBase;
+    private VSignSystem vSignSystem;
     private VSignIn vSignIn;
     private VReservation vReservation;
     private VPayment vPayment;
-    private VSignSystem vSignSystem;
     private InitPanel initPanel;
     private MouseInputs inputs;
-    private DBQuery dataBase;
     private Client client;
-    private ArrayList<ServHotel> serviciosHotel;
+    private Room room;
+    private List<ServHotel> servicesSelected;
     private ArrayList<Room> rooms;
+    private Color required;
     private int label = 11, button = 6, font = 4, textField = 6;
 
 
     public Services() {
 
         dataBase = new DBQuery();
+        required = new Color(227, 111, 111);
         vSignSystem = new VSignSystem(label, button, font, textField);
         vSignIn = new VSignIn(label, button, font, textField);
         vReservation = new VReservation(label, button, font, textField);
@@ -39,8 +43,8 @@ public class Services {
 
         initPanel = new InitPanel(vSignSystem, vSignIn, vReservation, vPayment);
         inputs = new MouseInputs(vSignSystem, vSignIn, vReservation, vPayment, this);
-        rooms = vReservation.drawModel(dataBase.readRooms());
-        serviciosHotel = dataBase.readServiceHotel();
+        servicesSelected = new ArrayList<>();
+        rooms = dataBase.readRooms();
 
         vSignSystem.getButtonAccept().addMouseListener(inputs);
         vSignSystem.getButtonBack().addMouseListener(inputs);
@@ -52,7 +56,6 @@ public class Services {
 
         vReservation.getButtonEnd().addMouseListener(inputs);
         vReservation.getSignOut().addMouseListener(inputs);
-        vReservation.getTable().addMouseListener(inputs);
 
         vPayment.getButtonPay().addMouseListener(inputs);
         vPayment.getButtonBack().addMouseListener(inputs);
@@ -65,42 +68,38 @@ public class Services {
         String pass = vSignIn.getTextInput()[1].getText();
 
         if(dataBase.verifyUser(mail, pass)){
-            Client client = dataBase.saveClient(mail);
-            vReservation.getLabelWelcome().setText("Bienvenid@, " + client.getName() + " " + client.getLastName());
-            vPayment.setVisible(false);
+            client = dataBase.saveClient(mail);
             vSignIn.setVisible(false);
             vReservation.setVisible(true);
+            vReservation.getLabelWelcome().setText("Bienvenid@, " + client.getName() + " " + client.getLastName());
+            vReservation.createModel(rooms, inputs);
+//            vReservation.getTable().addMouseListener(inputs);
         }else{
-            vSignIn.getTextInput()[0].setBackground(new Color(227, 111, 111));
-            vSignIn.getTextInput()[1].setBackground(new Color(227, 111, 111));
+            vSignIn.getTextInput()[0].setBackground(required);
+            vSignIn.getTextInput()[1].setBackground(required);
         }
     }
 
     // Verificar si el correo ya existe.
     public void verifyEmailSuccess(){
-
         String email = vSignSystem.getTextEmail().getText();
 
         if (dataBase.verifyEmail(email)){
-
-            vSignSystem.getTextEmail().setBackground(new Color(227, 111, 111));
-
+            vSignSystem.getTextEmail().setBackground(required);
         }else{
-
             if(vSignSystem.getTextCC().getText().isBlank()){
-                vSignSystem.getTextCC().setBackground(new Color(227, 111, 111));
+                vSignSystem.getTextCC().setBackground(required);
 
             } else if (vSignSystem.getTextName().getText().isBlank()) {
-                vSignSystem.getTextName().setBackground(new Color(227, 111, 111));
+                vSignSystem.getTextName().setBackground(required);
 
             } else if (vSignSystem.getTextPhone().getText().isBlank()) {
-                vSignSystem.getTextPhone().setBackground(new Color(227, 111, 111));
+                vSignSystem.getTextPhone().setBackground(required);
 
             } else if (vSignSystem.getTextPassword().getText().isBlank()) {
-                vSignSystem.getTextPassword().setBackground(new Color(227, 111, 111));
+                vSignSystem.getTextPassword().setBackground(required);
 
             }else{
-
                 int id = Integer.parseInt(vSignSystem.getTextCC().getText());
                 String name = vSignSystem.getTextName().getText();
                 String lastName = vSignSystem.getTextLastName().getText();
@@ -109,7 +108,8 @@ public class Services {
                 String phone = vSignSystem.getTextPhone().getText();
 
                 dataBase.insertNewClient(id, name, lastName, mail, pass, phone);
-                vSignSystem.getButtonAccept().setBackground(new Color(28, 151, 18));
+                vSignSystem.setVisible(false);
+                vSignIn.setVisible(true);
                 for (int i = 0; i < 5; i++) {
                     vSignSystem.getText()[i].setText("");
                 }
@@ -119,35 +119,33 @@ public class Services {
 
     // Obtener la habitacion por el evento de click
     public Room getRoomsByIdClicked(int id){
-        int habitacion_id = rooms.get(id).getId();
-        Room room = dataBase.getRoomById(habitacion_id);
-        System.out.println(room.getId() + " | " + room.getType() + " | " + room.getPrice());
+        int idRow = rooms.get(id).getId();
+        room = dataBase.getRoomById(idRow);
         if(room.isState()){
             vReservation.isAvailableRoom().setBackground(new Color(28, 151, 18));
-            vReservation.isAvailableRoom().setText("Disponible");
         } else if (!room.isState()) {
-            vReservation.isAvailableRoom().setBackground(new Color(227, 111, 111));
-            vReservation.isAvailableRoom().setText("Ocupado");
-        } else{
-            vReservation.isAvailableRoom().setBackground(new Color(100, 100, 100, 0));
-            vReservation.isAvailableRoom().setText("");
+            vReservation.isAvailableRoom().setBackground(required);
         }
         return room;
     }
 
     // Actualizar la tabla
     public void updateTableModel(){
+        vReservation.createModel(rooms, inputs);
         vReservation.getModel().fireTableDataChanged();
         vReservation.getTable().repaint();
     }
 
     // Resetear los componentes al salir de sesión
     public void resetInterfaces(){
-        vReservation.drawModel(dataBase.readRooms());
-        vReservation.drawModel(rooms);
         vSignIn.getInputMail().setText("");
         vSignIn.getInputPass().setText("");
-//        vPayment.drawComponents();
+        vReservation.getCheckSauna().setSelected(false);
+        vReservation.getCheckSpa().setSelected(false);
+        vReservation.getCheckRelocation().setSelected(false);
+        vReservation.getCheckDinner().setSelected(false);
+        vReservation.getCheckBreak().setSelected(false);
+        vReservation.getCheckClub().setSelected(false);
         for (int i = 0; i < vSignSystem.getTextInput().length; i++) {
             vSignSystem.getTextInput()[i].setText("");
         }
@@ -174,7 +172,13 @@ public class Services {
         vPayment.getLabelStartDate().setText(formatDate(startDate) + "");
         vPayment.getLabelEndDate().setText(formatDate(endDate) + "");
 
-        vPayment.getLabelServices().setText("Servicios");
+        if(servicesSelected.size() > 0){
+            String printServices = "";
+            for(int i= 0; i < servicesSelected.size(); i++){
+                printServices += servicesSelected.get(i).getName() + " $" + servicesSelected.get(i).getPrice() + "\n";
+            }
+            vPayment.getTextServices().setText(printServices);
+        }
         vPayment.getButtonPay().setText("Pagar: " + room.getPrice());
     }
 
@@ -186,6 +190,20 @@ public class Services {
         return dateSql;
     }
 
+    // Obtener el total de la reserva
+    public float getTotal(){
+        ArrayList<ServHotel> serviciosHotel = dataBase.readServiceHotel();
+        servicesSelected = new ArrayList<>();
+        float total = 0;
 
+        for (int i = 0; i < vReservation.getCheckBox().length; i++) {
+            if(vReservation.getCheckBox()[i].isSelected()) {
+                total += serviciosHotel.get(i).getPrice();
+                servicesSelected.add(serviciosHotel.get(i));
+            }
+        }
+        total += room.getPrice();
+        return total;
+    }
 
 }

@@ -1,12 +1,14 @@
 package vistas;
 
 import com.toedter.calendar.JDateChooser;
+import inputMouse.MouseInputs;
 import interfaceWindow.AbstractPanel;
 import model.Room;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -25,6 +27,7 @@ public class VReservation extends AbstractPanel {
     private ArrayList<Room> roomList;
     private JDateChooser[] calendar;
     private JCheckBox[] checkBox;
+
 
     public VReservation(int text, int button, int font, int textInput ) {
         super(text, button, textInput, "assets/HotelReceptionResize.jpg");
@@ -46,12 +49,12 @@ public class VReservation extends AbstractPanel {
         drawLabel(1, font[2], "Inicio", 156, 533, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(2, font[2], "Final", 156, 585, 200, 33, Color.WHITE, JLabel.LEFT);
         drawLabel(3, font[2], "Servicios", 772, 530, 200, 33, Color.WHITE, JLabel.LEFT);
-        drawLabel(4, font[3], "Cerrar Sesión", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
+        drawLabel(4, font[3], "         ", 20, 650, 200, 40, Color.WHITE, JLabel.CENTER);
 
         drawLabel(5, font[2], "Finalizar", 1000, 650, 200, 40, Color.WHITE, JLabel.CENTER);
         getButtonEnd().setBackground(new Color(21, 19, 111));
         getButtonEnd().setOpaque(true);
-        drawLabel(6, font[2], "", 990, 36, 200, 50, Color.GRAY, JLabel.CENTER);
+        drawLabel(6, font[2], "", 1090, 50, 100, 25, Color.GRAY, JLabel.CENTER);
         getText()[6].setBackground(new Color(0,0,0,0));
         getText()[6].setForeground(Color.black);
         getText()[6].setOpaque(true);
@@ -79,7 +82,7 @@ public class VReservation extends AbstractPanel {
         drawInputText(1, font[3], hour + " : " + minute, 430, 585, 150, 30);
     }
 
-    public ArrayList<Room> drawModel(ArrayList<Room> rooms){
+    public void createModel(ArrayList<Room> rooms, MouseInputs inputs){
         roomList = rooms;
         String[] columnNames = {"Número", "Tipo", "Capacidad", "Precio", "Estado"};
 
@@ -91,22 +94,16 @@ public class VReservation extends AbstractPanel {
         for(Room room : roomList){
             model.addRow(new Object[] {room.getId(), room.getType(), room.getCapacity(), room.getPrice(), room.isState()});
         }
-
-        drawTable(model);
-        return rooms;
+        drawTable(model, inputs);
     }
 
-    public void drawTable(DefaultTableModel model){
+    public void drawTable(DefaultTableModel model, MouseInputs inputs){
 
-        model.isCellEditable(11, 4);
         table = new JTable(model);
-        table.setBorder(null);
+        table.setBorder(new EmptyBorder(5,5,5,5));
         table.setRowHeight(27);
-        table.getColumnModel().getColumn(0).setPreferredWidth(20);
         table.setFont(new Font("Arima Madurai", Font.PLAIN, 18));
-        table.isCellEditable(12, 4);
-
-        table.setShowGrid(true);
+        table.setBackground(new Color(30,30,30));
 
         JTableHeader headerColumn = table.getTableHeader();
         headerColumn.setPreferredSize(new Dimension(headerColumn.getWidth(), 40));
@@ -117,7 +114,6 @@ public class VReservation extends AbstractPanel {
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
         cellRenderer.setBorder(BorderFactory.createEmptyBorder());
         cellRenderer.setHorizontalAlignment(JLabel.CENTER);
-        cellRenderer.setOpaque(true);
         cellRenderer.setBackground(new Color(0, 0, 0));
         cellRenderer.setForeground(Color.WHITE);
 
@@ -126,6 +122,7 @@ public class VReservation extends AbstractPanel {
         }
 
         tablaPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+        table.addMouseListener(inputs);
         getModel().fireTableDataChanged();
         table.repaint();
     }
@@ -196,4 +193,7 @@ public class VReservation extends AbstractPanel {
         return checkBox[5];
     }
 
+    public JCheckBox[] getCheckBox() {
+        return checkBox;
+    }
 }

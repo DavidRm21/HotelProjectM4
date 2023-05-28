@@ -5,6 +5,8 @@ import vistas.VReservation;
 import vistas.VSignIn;
 import vistas.VSignSystem;
 import service.Services;
+
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,6 +19,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     private VReservation vReservation;
     private VPayment vPayment;
     private Services services;
+    private float total = 0;
 
     public MouseInputs(VSignSystem vSignSystem, VSignIn vSignIn, VReservation vReservation, VPayment vPayment, Services services) {
         this.vSignSystem = vSignSystem;
@@ -24,6 +27,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         this.vReservation = vReservation;
         this.vPayment = vPayment;
         this.services = services;
+
     }
 
     @Override
@@ -53,10 +57,13 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
         if(e.getSource() == vReservation.getButtonEnd()){
             int id= vReservation.getTable().getSelectedRow();
-            if(services.verifyAvailable(services.getRoomsByIdClicked(id))){
+            if(services.verifyAvailable(services.getRoomsByIdClicked(id)) && vReservation.getTable().getSelectedRow() >= 0){
+
                 vReservation.setVisible(false);
                 vPayment.setVisible(true);
+                total = services.getTotal();
                 services.setSummary(services.getRoomsByIdClicked(id));
+                vPayment.getButtonPay().setText("Pagar: " + total);
             }
         }
         if(e.getSource() == vReservation.getSignOut()){
@@ -76,7 +83,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
             vReservation.setVisible(true);
         }
         if(e.getSource() == vPayment.getButtonPay()){
-            System.out.println("Pagar");
+            JOptionPane.showMessageDialog(null, "Reserva exitosa ");
         }
 
     }

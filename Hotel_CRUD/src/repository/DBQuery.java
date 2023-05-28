@@ -4,6 +4,7 @@ import model.Client;
 import model.Room;
 import model.ServHotel;
 
+import javax.swing.*;
 import javax.xml.namespace.QName;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -22,7 +23,7 @@ public class DBQuery {
 
 
     public boolean verifyUser(String email, String password){
-        String query = "SELECT correo, contrasena FROM cliente WHERE correo = \"" + email + "\" AND contrasena REGEXP BINARY \'" + password + "\'";
+        String query = "SELECT correo, contrasena FROM cliente WHERE correo = \"" + email + "\" AND contrasena = \'" + password + "\'";
 
         try{
             conexion = connect.getConnection();
@@ -153,6 +154,8 @@ public class DBQuery {
             preparedStatement.setString(6, phone);
 
             preparedStatement.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Registro exitoso");
 
         }catch (Exception e){
             System.out.println("[ERROR] " + e);
